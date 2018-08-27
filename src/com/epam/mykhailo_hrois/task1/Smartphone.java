@@ -1,0 +1,104 @@
+package com.epam.mykhailo_hrois.task1;
+
+import java.util.Objects;
+
+public class Smartphone {
+    private String OS;
+    private String core;
+    private double RAM;
+    private double storage;
+    private double screenSize;
+    private int simNumber;
+
+    public Smartphone(){
+        super();
+        this.OS = "Android";
+    }
+
+    public Smartphone(String OS, String core, double RAM, double storage, double screenSize, int simNumber) {
+        this.OS = OS;
+        this.core = core;
+        this.RAM = RAM;
+        this.storage = storage;
+        this.screenSize = screenSize;
+        this.simNumber = simNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Smartphone)) return false;
+        Smartphone that = (Smartphone) o;
+        return Double.compare(that.getRAM(), getRAM()) == 0 &&
+                Double.compare(that.getStorage(), getStorage()) == 0 &&
+                Double.compare(that.getScreenSize(), getScreenSize()) == 0 &&
+                getSimNumber() == that.getSimNumber() &&
+                Objects.equals(getOS(), that.getOS()) &&
+                Objects.equals(getCore(), that.getCore());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getOS(), getCore(), getRAM(), getStorage(), getScreenSize(), getSimNumber());
+    }
+
+    @Override
+    public String toString() {
+        return "Smartphone{" +
+                "OS='" + OS + '\'' +
+                ", core='" + core + '\'' +
+                ", RAM=" + RAM +
+                ", storage=" + storage +
+                ", screenSize=" + screenSize +
+                ", simNumber=" + simNumber +
+                '}';
+    }
+
+    public String getOS() {
+        return OS;
+    }
+
+    public void setOS(String OS) {
+        this.OS = OS;
+    }
+
+    public String getCore() {
+        return core;
+    }
+
+    public void setCore(String core) {
+        this.core = core;
+    }
+
+    public double getRAM() {
+        return RAM;
+    }
+
+    public void setRAM(double RAM) {
+        this.RAM = RAM;
+    }
+
+    public double getStorage() {
+        return storage;
+    }
+
+    public void setStorage(double storage) {
+        this.storage = storage;
+    }
+
+    public double getScreenSize() {
+        return screenSize;
+    }
+
+    public void setScreenSize(double screenSize) {
+        this.screenSize = screenSize;
+    }
+
+    public int getSimNumber() {
+        return simNumber;
+    }
+
+    public void setSimNumber(int simNumber) {
+        this.simNumber = simNumber;
+    }
+}

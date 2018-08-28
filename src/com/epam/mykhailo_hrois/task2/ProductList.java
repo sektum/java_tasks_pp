@@ -1,9 +1,6 @@
 package com.epam.mykhailo_hrois.task2;
 
-import com.sun.deploy.util.ArrayUtil;
-
 import java.util.*;
-import java.util.function.UnaryOperator;
 
 public class ProductList<E> implements List<E> {
 

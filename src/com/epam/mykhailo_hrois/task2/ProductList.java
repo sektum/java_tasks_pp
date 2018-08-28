@@ -1,8 +1,9 @@
 package com.epam.mykhailo_hrois.task2;
 
 import java.util.*;
+import java.util.function.Predicate;
 
-public class ProductList<E> implements List<E>, Iterable<E> {
+public class ProductList<E> implements List<E> {
 
     Object[] list = {};
     int length = 0;
@@ -257,6 +258,7 @@ public class ProductList<E> implements List<E>, Iterable<E> {
         }
         return false;
     }
+
     private void grow(int minCapacity) {
         int oldCapacity = list.length;
         int newCapacity = oldCapacity + (oldCapacity >> 1);
@@ -304,27 +306,29 @@ public class ProductList<E> implements List<E>, Iterable<E> {
     }
 
     // Iterator
-    @Override
-    public Iterator<E> iterator() {
-        return new IteratorWithCondition<E>();
+    public Iterator<E> iterator(Predicate<E> predicate) {
+        return new IteratorWithCondition<E>(predicate);
     }
 
-    private class IteratorWithCondition<E> implements Iterator<E> {
+    @Override
+    public Iterator<E> iterator() {
+        return new IteratorBase<E>();
+    }
+
+    class IteratorBase<E> implements Iterator<E> {
 
         int cursor; // index of next element to return
         int lastRet = -1; // index of last element returned; -1 if no such
 
-        IteratorWithCondition() {
-            // TODO Auto-generated constructor stub
+        IteratorBase() {
         }
 
         public boolean hasNext() {
-            return cursor != length;
+            return cursor < length;
         }
 
         @SuppressWarnings("unchecked")
         public E next() {
-
             int i = cursor;
             if (i >= length)
                 throw new NoSuchElementException();
@@ -342,4 +346,19 @@ public class ProductList<E> implements List<E>, Iterable<E> {
         }
     }
 
+    class IteratorWithCondition<E> extends IteratorBase<E> {
+        Predicate<E> predicate;
+
+        IteratorWithCondition(Predicate<E> predicate) {
+            this.predicate = predicate;
+        }
+
+        @Override
+        public E next(){
+            int i = cursor;
+            E element = (E) list[i];
+            //help
+            return element;
+        }
+    }
 }

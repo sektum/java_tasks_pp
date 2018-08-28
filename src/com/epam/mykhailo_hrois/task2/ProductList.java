@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ProductList<E> implements List<E> {
 
-    Object[] list;
+    Object[] list = {};
     int length = 0;
 
     private static final int DEFAULT_CAPACITY = 5;

@@ -2,7 +2,7 @@ package com.epam.mykhailo_hrois.task2;
 
 import java.util.*;
 
-public class ProductList<E> implements List<E> {
+public class ProductList<E> implements List<E>, Iterable<E> {
 
     Object[] list = {};
     int length = 0;
@@ -306,15 +306,15 @@ public class ProductList<E> implements List<E> {
     // Iterator
     @Override
     public Iterator<E> iterator() {
-        return new IteratorImpl<E>();
+        return new IteratorWithCondition<E>();
     }
 
-    private class IteratorImpl<E> implements Iterator<E> {
+    private class IteratorWithCondition<E> implements Iterator<E> {
 
         int cursor; // index of next element to return
         int lastRet = -1; // index of last element returned; -1 if no such
 
-        IteratorImpl() {
+        IteratorWithCondition() {
             // TODO Auto-generated constructor stub
         }
 
@@ -324,6 +324,7 @@ public class ProductList<E> implements List<E> {
 
         @SuppressWarnings("unchecked")
         public E next() {
+
             int i = cursor;
             if (i >= length)
                 throw new NoSuchElementException();

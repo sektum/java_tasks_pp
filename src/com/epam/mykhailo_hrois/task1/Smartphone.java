@@ -2,7 +2,7 @@ package com.epam.mykhailo_hrois.task1;
 
 import java.util.Objects;
 
-public class Smartphone {
+public class Smartphone extends Electronic{
     private String OS;
     private String core;
     private double RAM;
@@ -10,12 +10,9 @@ public class Smartphone {
     private double screenSize;
     private int simNumber;
 
-    public Smartphone(){
-        super();
-        this.OS = "Android";
-    }
-
-    public Smartphone(String OS, String core, double RAM, double storage, double screenSize, int simNumber) {
+    public Smartphone(String name, double price, boolean isAvailable, boolean isInBasket, String country, boolean isWireless,
+                      double voltage, String OS, String core, double RAM, double storage, double screenSize, int simNumber) {
+        super(name, price, isAvailable, isInBasket, country, isWireless, voltage);
         this.OS = OS;
         this.core = core;
         this.RAM = RAM;

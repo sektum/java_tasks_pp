@@ -6,12 +6,8 @@ public class Electronic extends Product {
     private boolean isWireless;
     private double voltage;
 
-    public Electronic(){
-        super();
-        this.isWireless = false;
-    }
-
-    public Electronic(boolean isWireless, double voltage){
+    public Electronic(String name, double price, boolean isAvailable, boolean isInBasket, String country, boolean isWireless, double voltage) {
+        super(name, price, isAvailable, isInBasket, country);
         this.isWireless = isWireless;
         this.voltage = voltage;
     }

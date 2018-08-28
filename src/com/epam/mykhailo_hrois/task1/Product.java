@@ -9,17 +9,16 @@ public class Product {
     private boolean isInBasket;
     private String country;
 
-    public Product(){
-        this.isAvailable = false;
-        this.isInBasket = false;
-    }
-
     public Product(String name, double price, boolean isAvailable, boolean isInBasket, String country) {
         this.name = name;
         this.price = price;
         this.isAvailable = isAvailable;
         this.isInBasket = isInBasket;
         this.country = country;
+    }
+
+    public Product() {
+
     }
 
     @Override

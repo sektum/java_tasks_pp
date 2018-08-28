@@ -7,19 +7,14 @@ public class ProductList<E> implements List<E> {
     Object[] list;
     int length = 0;
 
+    private static final int DEFAULT_CAPACITY = 5;
+    private static final Object[] EMPTY_LIST = {};
+
     @Override
     public boolean add(E e) {
-        if (this.length != 0) {
-            list = Arrays.copyOf(list, ++this.length);
-            list[this.length - 1] = e;
-            return true;
-        }
-        if (this.length == 0) {
-            list = new Object[]{e};
-            this.length++;
-            return true;
-        }
-        return false;
+        capacity(length + 1);
+        list[length++] = e;
+        return true;
     }
 
     @Override
@@ -42,13 +37,11 @@ public class ProductList<E> implements List<E> {
 
     @Override
     public void add(int index, E element) {
-        Object[] leftList = Arrays.copyOfRange(list, 0, index);
-        leftList = Arrays.copyOf(leftList, leftList.length + 1);
-        leftList[index] = element;
-        Object[] rightList = Arrays.copyOfRange(list, index, length);
-        list = new Object[leftList.length + rightList.length];
-        System.arraycopy(leftList, 0, list, 0, leftList.length);
-        System.arraycopy(rightList, 0, list, leftList.length, rightList.length);
+        capacity(length + 1);
+        System.arraycopy(list, index, list, index + 1,
+                length - index);
+        list[index] = element;
+        length++;
     }
 
     @Override
@@ -135,31 +128,23 @@ public class ProductList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        boolean flag = false;
-        if (c.size() == 0)
-            return flag;
-        Object[] arr = c.toArray();
-        for (int i = 0; i < arr.length; i++) {
-            this.add((E) arr[i]);
-            if (arr[i].equals(this.list[i]))
-                flag = true;
-            else
-                flag = false;
-        }
-        return flag;
+        Object[] a = c.toArray();
+        int numNew = a.length;
+        capacity(length + numNew);
+        System.arraycopy(a, 0, list, length, numNew);
+        length += numNew;
+        return numNew != 0;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        list = list = Arrays.copyOf(list, this.length + c.size());
         Object[] a = c.toArray();
         int numNew = a.length;
-
+        capacity(length + numNew);
         int numMoved = length - index;
         if (numMoved > 0)
             System.arraycopy(list, index, list, index + numNew,
                     numMoved);
-
         System.arraycopy(a, 0, list, index, numNew);
         length += numNew;
         return numNew != 0;
@@ -175,14 +160,12 @@ public class ProductList<E> implements List<E> {
     public boolean retainAll(Collection c) {
         final Object[] elementData = this.list;
         int r = 0, w = 0;
-        boolean modified = false;
+        boolean flag = false;
         try {
             for (; r < length; r++)
                 if (c.contains(elementData[r]))
                     elementData[w++] = elementData[r];
         } finally {
-            // Preserve behavioral compatibility with AbstractCollection,
-            // even if c.contains() throws.
             if (r != length) {
                 System.arraycopy(elementData, r,
                         elementData, w,
@@ -190,14 +173,13 @@ public class ProductList<E> implements List<E> {
                 w += length - r;
             }
             if (w != length) {
-                // clear to let GC do its work
                 for (int i = w; i < length; i++)
                     elementData[i] = null;
                 length = w;
-                modified = true;
+                flag = true;
             }
         }
-        return modified;
+        return flag;
     }
 
     @Override
@@ -275,6 +257,39 @@ public class ProductList<E> implements List<E> {
         }
         return false;
     }
+    private void grow(int minCapacity) {
+        int oldCapacity = list.length;
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        if (newCapacity - minCapacity < 0)
+            newCapacity = minCapacity;
+        if (newCapacity - (Integer.MAX_VALUE - 8) > 0)
+            newCapacity = hugeCapacity(minCapacity);
+        list = Arrays.copyOf(list, newCapacity);
+    }
+
+    private int hugeCapacity(int minCapacity) {
+        if (minCapacity < 0) // overflow
+            throw new OutOfMemoryError();
+        return (minCapacity > (Integer.MAX_VALUE - 8)) ?
+                Integer.MAX_VALUE :
+                (Integer.MAX_VALUE - 8);
+    }
+
+    private void needToGrow(int minCapacity) {
+        if (minCapacity - list.length > 0)
+            grow(minCapacity);
+    }
+
+    private void capacity(int i) {
+        needToGrow(calculateCapacity(list, i));
+    }
+
+    private static int calculateCapacity(Object[] elementData, int minCapacity) {
+        if (elementData == EMPTY_LIST) {
+            return Math.max(DEFAULT_CAPACITY, minCapacity);
+        }
+        return minCapacity;
+    }
 
     @Override
     public String toString() {
@@ -287,7 +302,6 @@ public class ProductList<E> implements List<E> {
         result.append("]");
         return result.toString();
     }
-
 
     // Iterator
     @Override
@@ -326,4 +340,5 @@ public class ProductList<E> implements List<E> {
             lastRet = -1;
         }
     }
+
 }

@@ -50,9 +50,10 @@ public class ProductList<E> implements List<E> {
         E oldValue = (E) array[index];
 
         int numMoved = size - index - 1;
-        if (numMoved > 0)
+        if (numMoved > 0) {
             System.arraycopy(array, index + 1, array, index,
                     numMoved);
+        }
         array[--size] = null;
 
         return oldValue;
@@ -62,12 +63,14 @@ public class ProductList<E> implements List<E> {
     public int indexOf(Object o) {
         if (o == null) {
             for (int i = 0; i < size; i++)
-                if (array[i] == null)
+                if (array[i] == null) {
                     return i;
+                }
         } else {
             for (int i = 0; i < size; i++)
-                if (o.equals(array[i]))
+                if (o.equals(array[i])) {
                     return i;
+                }
         }
         return -1;
     }
@@ -76,12 +79,14 @@ public class ProductList<E> implements List<E> {
     public int lastIndexOf(Object o) {
         if (o == null) {
             for (int i = size - 1; i >= 0; i--)
-                if (array[i] == null)
+                if (array[i] == null) {
                     return i;
+                }
         } else {
             for (int i = size - 1; i >= 0; i--)
-                if (o.equals(array[i]))
+                if (o.equals(array[i])) {
                     return i;
+                }
         }
         return -1;
     }
@@ -111,11 +116,13 @@ public class ProductList<E> implements List<E> {
         int counter = 0;
         for (counter = 0; counter < this.size; counter++) {
             if (array[counter] != null) {
-                if (array[counter].equals(o))
+                if (array[counter].equals(o)) {
                     break;
+                }
             } else {
-                if (array[counter] == o)
+                if (array[counter] == o) {
                     break;
+                }
             }
         }
         if (counter == this.size) {
@@ -144,9 +151,10 @@ public class ProductList<E> implements List<E> {
         int numNew = a.length;
         capacity(size + numNew);
         int numMoved = size - index;
-        if (numMoved > 0)
+        if (numMoved > 0) {
             System.arraycopy(array, index, array, index + numNew,
                     numMoved);
+        }
         System.arraycopy(a, 0, array, index, numNew);
         size += numNew;
         return numNew != 0;
@@ -165,8 +173,9 @@ public class ProductList<E> implements List<E> {
         boolean flag = false;
         try {
             for (; r < size; r++)
-                if (c.contains(elementData[r]))
+                if (c.contains(elementData[r])) {
                     elementData[w++] = elementData[r];
+                }
         } finally {
             if (r != size) {
                 System.arraycopy(elementData, r,
@@ -187,15 +196,17 @@ public class ProductList<E> implements List<E> {
     @Override
     public boolean removeAll(Collection c) {
         boolean flag = false;
-        if (c.size() == 0)
+        if (c.isEmpty()) {
             return flag;
+        }
         Object[] arr = c.toArray();
         for (int i = 0; i < arr.length; i++) {
             this.remove((E) arr[i]);
-            if (arr[i].equals(this.array[i]))
+            if (arr[i].equals(this.array[i])) {
                 flag = true;
-            else
+            } else {
                 flag = false;
+            }
         }
         return flag;
     }
@@ -263,24 +274,28 @@ public class ProductList<E> implements List<E> {
     private void grow(int minCapacity) {
         int oldCapacity = array.length;
         int newCapacity = oldCapacity + (oldCapacity >> 1);
-        if (newCapacity - minCapacity < 0)
+        if (newCapacity - minCapacity < 0) {
             newCapacity = minCapacity;
-        if (newCapacity - (Integer.MAX_VALUE - 8) > 0)
+        }
+        if (newCapacity - (Integer.MAX_VALUE - 8) > 0) {
             newCapacity = hugeCapacity(minCapacity);
+        }
         array = Arrays.copyOf(array, newCapacity);
     }
 
     private int hugeCapacity(int minCapacity) {
-        if (minCapacity < 0) // overflow
+        if (minCapacity < 0) {
             throw new OutOfMemoryError();
+        }
         return (minCapacity > (Integer.MAX_VALUE - 8)) ?
                 Integer.MAX_VALUE :
                 (Integer.MAX_VALUE - 8);
     }
 
     private void needToGrow(int minCapacity) {
-        if (minCapacity - array.length > 0)
+        if (minCapacity - array.length > 0) {
             grow(minCapacity);
+        }
     }
 
     private void capacity(int i) {
@@ -332,8 +347,9 @@ public class ProductList<E> implements List<E> {
         @SuppressWarnings("unchecked")
         public E next() {
             int i = cursor;
-            if (i >= size)
+            if (i >= size) {
                 throw new NoSuchElementException();
+            }
             cursor = i + 1;
             lastRet = i;
             return (E) ProductList.this.array[i];
@@ -341,9 +357,9 @@ public class ProductList<E> implements List<E> {
 
         @Override
         public void remove() {
-            if (lastRet < 0)
+            if (lastRet < 0) {
                 throw new IllegalStateException();
-
+            }
             ProductList.this.remove(ProductList.this.array[lastRet]);
             cursor = lastRet;
             lastRet = -1;

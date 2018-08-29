@@ -23,19 +23,13 @@ public class Product {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Product: ")
-                .append(name)
-                .append(", ")
-                .append("available - ")
-                .append(isAvailable)
-                .append(", ")
-                .append("price - ")
-                .append(price)
-                .append(", country - ")
-                .append(country)
-                .append(".");
-        return sb.toString();
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", isAvailable=" + isAvailable +
+                ", isInBasket=" + isInBasket +
+                ", country='" + country + '\'' +
+                '}';
     }
 
     @Override

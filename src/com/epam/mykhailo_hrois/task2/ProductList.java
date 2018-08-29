@@ -338,6 +338,7 @@ public class ProductList<E> implements List<E> {
             return (E) ProductList.this.array[lastRet = i];
         }
 
+        @Override
         public void remove() {
             if (lastRet < 0)
                 throw new IllegalStateException();
@@ -358,7 +359,7 @@ public class ProductList<E> implements List<E> {
 
         @Override
         public E next() {
-            E element = (E) array[cursor];
+            E element = (E) array[lastRet = cursor];
             cursor = findNext(++cursor);
             return element;
         }

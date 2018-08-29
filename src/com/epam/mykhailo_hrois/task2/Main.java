@@ -20,14 +20,14 @@ public class Main {
         collection.add(pr2);
         collection.add(pr3);
         listOfProducts.addAll(1, collection);
-        System.out.println(listOfProducts.toString());
+        System.out.println(listOfProducts);
         System.out.println(listOfProducts.size());
         listOfProducts.add(new Product("Nokia", 8.0, true, false, "UK"));
-        System.out.println(listOfProducts.toString());
+        System.out.println(listOfProducts);
         System.out.println(listOfProducts.size());
         listOfProducts.remove(1);
         listOfProducts.add(2, null);
-        System.out.println(listOfProducts.toString());
+        System.out.println(listOfProducts);
         System.out.println(listOfProducts.size());
         System.out.println(listOfProducts.isEmpty());
         //predicate
@@ -38,8 +38,10 @@ public class Main {
         while (iterator.hasNext()){
                 System.out.println(iterator.next());
         }
-        listOfProducts.clear();
-        System.out.println(listOfProducts.size());
-        System.out.println(listOfProducts.isEmpty());
+        System.out.println(listOfProducts);
+        iterator.remove();
+        System.out.println(listOfProducts);
+        iterator.remove();
+        System.out.println(listOfProducts);
     }
 }

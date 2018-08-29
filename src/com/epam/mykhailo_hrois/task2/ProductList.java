@@ -5,67 +5,68 @@ import java.util.function.Predicate;
 
 public class ProductList<E> implements List<E> {
 
-    Object[] list = {};
-    int length = 0;
+    Object[] array = {};
+    int size = 0;
 
     private static final int DEFAULT_CAPACITY = 5;
     private static final Object[] EMPTY_LIST = {};
 
     @Override
     public boolean add(E e) {
-        capacity(length + 1);
-        list[length++] = e;
+        capacity(size + 1);
+        array[size++] = e;
         return true;
     }
 
     @Override
     public void clear() {
-        list = new Object[]{};
-        this.length = 0;
+        array = new Object[]{};
+        this.size = 0;
     }
 
     @Override
     public E get(int index) {
-        return (E) this.list[index];
+        return (E) this.array[index];
     }
 
     @Override
     public E set(int index, E element) {
-        E oldValue = (E) list[index];
-        list[index] = element;
+        E oldValue = (E) array[index];
+        array[index] = element;
         return oldValue;
     }
 
     @Override
     public void add(int index, E element) {
-        capacity(length + 1);
-        System.arraycopy(list, index, list, index + 1,
-                length - index);
-        list[index] = element;
-        length++;
+        capacity(size + 1);
+        System.arraycopy(array, index, array, index + 1,
+                size - index);
+        array[index] = element;
+        size++;
     }
 
     @Override
     public E remove(int index) {
-        E oldValue = (E) list[index];
-        int numMoved = length - index - 1;
+        E oldValue = (E) array[index];
+
+        int numMoved = size - index - 1;
         if (numMoved > 0)
-            System.arraycopy(list, index + 1, list, index,
+            System.arraycopy(array, index + 1, array, index,
                     numMoved);
-        list[--length] = null;
-        list = Arrays.copyOf(list, this.length);
+        array[--size] = null;
+
         return oldValue;
     }
 
     @Override
     public int indexOf(Object o) {
         if (o == null) {
-            for (int i = 0; i < length; i++)
-                if (list[i] == null)
+            for (int i = 0; i < size; i++)
+                if (array[i] == null)
                     return i;
         } else {
-            for (int i = 0; i < length; i++)
-                if (o.equals(list[i]))
+            for (int i = 0; i < size; i++)
+                if (o.equals(array[i]))
                     return i;
         }
         return -1;
@@ -74,12 +75,12 @@ public class ProductList<E> implements List<E> {
     @Override
     public int lastIndexOf(Object o) {
         if (o == null) {
-            for (int i = length - 1; i >= 0; i--)
-                if (list[i] == null)
+            for (int i = size - 1; i >= 0; i--)
+                if (array[i] == null)
                     return i;
         } else {
-            for (int i = length - 1; i >= 0; i--)
-                if (o.equals(list[i]))
+            for (int i = size - 1; i >= 0; i--)
+                if (o.equals(array[i]))
                     return i;
         }
         return -1;
@@ -108,22 +109,22 @@ public class ProductList<E> implements List<E> {
     @Override
     public boolean remove(Object o) {
         int counter = 0;
-        for (counter = 0; counter < this.length; counter++) {
-            if (list[counter] != null) {
-                if (list[counter].equals(o))
+        for (counter = 0; counter < this.size; counter++) {
+            if (array[counter] != null) {
+                if (array[counter].equals(o))
                     break;
             } else {
-                if (list[counter] == o)
+                if (array[counter] == o)
                     break;
             }
         }
-        if (counter == this.length) {
+        if (counter == this.size) {
             return false;
         }
-        for (int k = counter; k < this.length - 1; k++)
-            list[k] = list[k + 1];
-        this.length--;
-        list = Arrays.copyOf(list, length);
+        for (int k = counter; k < this.size - 1; k++)
+            array[k] = array[k + 1];
+        this.size--;
+        array = Arrays.copyOf(array, size);
         return true;
     }
 
@@ -131,9 +132,9 @@ public class ProductList<E> implements List<E> {
     public boolean addAll(Collection<? extends E> c) {
         Object[] a = c.toArray();
         int numNew = a.length;
-        capacity(length + numNew);
-        System.arraycopy(a, 0, list, length, numNew);
-        length += numNew;
+        capacity(size + numNew);
+        System.arraycopy(a, 0, array, size, numNew);
+        size += numNew;
         return numNew != 0;
     }
 
@@ -141,42 +142,42 @@ public class ProductList<E> implements List<E> {
     public boolean addAll(int index, Collection<? extends E> c) {
         Object[] a = c.toArray();
         int numNew = a.length;
-        capacity(length + numNew);
-        int numMoved = length - index;
+        capacity(size + numNew);
+        int numMoved = size - index;
         if (numMoved > 0)
-            System.arraycopy(list, index, list, index + numNew,
+            System.arraycopy(array, index, array, index + numNew,
                     numMoved);
-        System.arraycopy(a, 0, list, index, numNew);
-        length += numNew;
+        System.arraycopy(a, 0, array, index, numNew);
+        size += numNew;
         return numNew != 0;
     }
 
 
     @Override
     public void sort(Comparator c) {
-        Arrays.sort((E[]) list, 0, length, c);
+        Arrays.sort((E[]) array, 0, size, c);
     }
 
     @Override
     public boolean retainAll(Collection c) {
-        final Object[] elementData = this.list;
+        final Object[] elementData = this.array;
         int r = 0, w = 0;
         boolean flag = false;
         try {
-            for (; r < length; r++)
+            for (; r < size; r++)
                 if (c.contains(elementData[r]))
                     elementData[w++] = elementData[r];
         } finally {
-            if (r != length) {
+            if (r != size) {
                 System.arraycopy(elementData, r,
                         elementData, w,
-                        length - r);
-                w += length - r;
+                        size - r);
+                w += size - r;
             }
-            if (w != length) {
-                for (int i = w; i < length; i++)
+            if (w != size) {
+                for (int i = w; i < size; i++)
                     elementData[i] = null;
-                length = w;
+                size = w;
                 flag = true;
             }
         }
@@ -191,7 +192,7 @@ public class ProductList<E> implements List<E> {
         Object[] arr = c.toArray();
         for (int i = 0; i < arr.length; i++) {
             this.remove((E) arr[i]);
-            if (arr[i].equals(this.list[i]))
+            if (arr[i].equals(this.array[i]))
                 flag = true;
             else
                 flag = false;
@@ -214,7 +215,7 @@ public class ProductList<E> implements List<E> {
 
     @Override
     public Object[] toArray() {
-        return Arrays.copyOf(list, this.length);
+        return Arrays.copyOf(array, this.size);
     }
 
     @Override
@@ -224,12 +225,12 @@ public class ProductList<E> implements List<E> {
 
     @Override
     public int size() {
-        return this.length;
+        return this.size;
     }
 
     @Override
     public boolean isEmpty() {
-        if (this.length == 0) {
+        if (this.size == 0) {
             return true;
         }
         return false;
@@ -238,19 +239,19 @@ public class ProductList<E> implements List<E> {
     @Override
     public boolean contains(Object o) {
         if (o == null) {
-            for (int i = 0; i < list.length; i++) {
-                if (list[i] == o) {
+            for (int i = 0; i < array.length; i++) {
+                if (array[i] == o) {
                     return true;
                 }
             }
         } else {
-            for (int i = 0; i < list.length; i++) {
-                if (list[i] == null) {
-                    if (list[i] == o) {
+            for (int i = 0; i < array.length; i++) {
+                if (array[i] == null) {
+                    if (array[i] == o) {
                         return true;
                     }
                 } else {
-                    if (list[i].equals(o)) {
+                    if (array[i].equals(o)) {
                         return true;
                     }
                 }
@@ -260,13 +261,13 @@ public class ProductList<E> implements List<E> {
     }
 
     private void grow(int minCapacity) {
-        int oldCapacity = list.length;
+        int oldCapacity = array.length;
         int newCapacity = oldCapacity + (oldCapacity >> 1);
         if (newCapacity - minCapacity < 0)
             newCapacity = minCapacity;
         if (newCapacity - (Integer.MAX_VALUE - 8) > 0)
             newCapacity = hugeCapacity(minCapacity);
-        list = Arrays.copyOf(list, newCapacity);
+        array = Arrays.copyOf(array, newCapacity);
     }
 
     private int hugeCapacity(int minCapacity) {
@@ -278,12 +279,12 @@ public class ProductList<E> implements List<E> {
     }
 
     private void needToGrow(int minCapacity) {
-        if (minCapacity - list.length > 0)
+        if (minCapacity - array.length > 0)
             grow(minCapacity);
     }
 
     private void capacity(int i) {
-        needToGrow(calculateCapacity(list, i));
+        needToGrow(calculateCapacity(array, i));
     }
 
     private static int calculateCapacity(Object[] elementData, int minCapacity) {
@@ -297,8 +298,8 @@ public class ProductList<E> implements List<E> {
     public String toString() {
         StringBuilder result = new StringBuilder();
         result.append("[ ");
-        for (int i = 0; i < list.length; i++) {
-            result.append(list[i]);
+        for (int i = 0; i < array.length; i++) {
+            result.append(array[i]);
             result.append(" ");
         }
         result.append("]");
@@ -324,23 +325,23 @@ public class ProductList<E> implements List<E> {
         }
 
         public boolean hasNext() {
-            return cursor < length;
+            return cursor < size;
         }
 
         @SuppressWarnings("unchecked")
         public E next() {
             int i = cursor;
-            if (i >= length)
+            if (i >= size)
                 throw new NoSuchElementException();
             cursor = i + 1;
-            return (E) ProductList.this.list[lastRet = i];
+            return (E) ProductList.this.array[lastRet = i];
         }
 
         public void remove() {
             if (lastRet < 0)
                 throw new IllegalStateException();
 
-            ProductList.this.remove(ProductList.this.list[lastRet]);
+            ProductList.this.remove(ProductList.this.array[lastRet]);
             cursor = lastRet;
             lastRet = -1;
         }
@@ -351,14 +352,26 @@ public class ProductList<E> implements List<E> {
 
         IteratorWithCondition(Predicate<E> predicate) {
             this.predicate = predicate;
+            cursor = findNext(cursor);
         }
 
         @Override
-        public E next(){
-            int i = cursor;
-            E element = (E) list[i];
-            //help
+        public E next() {
+            E element = (E) array[cursor];
+            cursor = findNext(++cursor);
             return element;
+        }
+
+        private int findNext(int cursor) {
+            for (; cursor < size; cursor++) {
+                if(array[cursor] == null){
+                    return size;
+                }
+                if(predicate.test((E) array[cursor])){
+                    return cursor;
+                }
+            }
+            return size;
         }
     }
 }

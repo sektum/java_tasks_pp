@@ -51,13 +51,12 @@ public class Electronic extends Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "Electronic{" +
                 "name='" + getName() + '\'' +
                 ", price=" + getPrice() +
                 ", isAvailable=" + isAvailable() +
                 ", isInBasket=" + isInBasket() +
                 ", country='" + getCountry() + '\'' +
-                '}' + '\n' + "Electronic{" +
                 "isWireless=" + isWireless +
                 ", voltage=" + voltage +
                 '}';

@@ -50,16 +50,14 @@ public class Smartphone extends Electronic {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "Smartphone{" +
                 "name='" + getName() + '\'' +
                 ", price=" + getPrice() +
                 ", isAvailable=" + isAvailable() +
                 ", isInBasket=" + isInBasket() +
                 ", country='" + getCountry() + '\'' +
-                '}' + '\n' + "Electronic{" +
                 "isWireless=" + isWireless() +
                 ", voltage=" + getVoltage() +
-                '}' + '\n' + "Smartphone{" +
                 "OS='" + OS + '\'' +
                 ", core='" + core + '\'' +
                 ", RAM=" + RAM +

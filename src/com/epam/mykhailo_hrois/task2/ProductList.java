@@ -232,10 +232,7 @@ public class ProductList<E> implements List<E> {
 
     @Override
     public boolean isEmpty() {
-        if (this.size == 0) {
-            return true;
-        }
-        return false;
+        return size == 0;
     }
 
     @Override

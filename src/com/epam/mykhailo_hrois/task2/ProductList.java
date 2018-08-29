@@ -48,29 +48,29 @@ public class ProductList<E> implements List<E> {
     @Override
     public E remove(int index) {
         E oldValue = (E) array[index];
-
         int numMoved = size - index - 1;
         if (numMoved > 0) {
             System.arraycopy(array, index + 1, array, index,
                     numMoved);
         }
         array[--size] = null;
-
         return oldValue;
     }
 
     @Override
     public int indexOf(Object o) {
         if (o == null) {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; i++) {
                 if (array[i] == null) {
                     return i;
                 }
+            }
         } else {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; i++) {
                 if (o.equals(array[i])) {
                     return i;
                 }
+            }
         }
         return -1;
     }
@@ -78,15 +78,17 @@ public class ProductList<E> implements List<E> {
     @Override
     public int lastIndexOf(Object o) {
         if (o == null) {
-            for (int i = size - 1; i >= 0; i--)
+            for (int i = size - 1; i >= 0; i--) {
                 if (array[i] == null) {
                     return i;
                 }
+            }
         } else {
-            for (int i = size - 1; i >= 0; i--)
+            for (int i = size - 1; i >= 0; i--) {
                 if (o.equals(array[i])) {
                     return i;
                 }
+            }
         }
         return -1;
     }
@@ -113,26 +115,15 @@ public class ProductList<E> implements List<E> {
 
     @Override
     public boolean remove(Object o) {
-        int counter = 0;
-        for (counter = 0; counter < this.size; counter++) {
-            if (array[counter] != null) {
-                if (array[counter].equals(o)) {
-                    break;
-                }
-            } else {
-                if (array[counter] == o) {
-                    break;
-                }
-            }
-        }
-        if (counter == this.size) {
+        int counter;
+        counter = indexOf(o);
+
+        if (counter == -1) {
             return false;
+        } else {
+            remove(indexOf(o));
+            return true;
         }
-        for (int k = counter; k < this.size - 1; k++)
-            array[k] = array[k + 1];
-        this.size--;
-        array = Arrays.copyOf(array, size);
-        return true;
     }
 
     @Override
@@ -172,10 +163,11 @@ public class ProductList<E> implements List<E> {
         int r = 0, w = 0;
         boolean flag = false;
         try {
-            for (; r < size; r++)
+            for (; r < size; r++) {
                 if (c.contains(elementData[r])) {
                     elementData[w++] = elementData[r];
                 }
+            }
         } finally {
             if (r != size) {
                 System.arraycopy(elementData, r,
@@ -184,8 +176,9 @@ public class ProductList<E> implements List<E> {
                 w += size - r;
             }
             if (w != size) {
-                for (int i = w; i < size; i++)
+                for (int i = w; i < size; i++) {
                     elementData[i] = null;
+                }
                 size = w;
                 flag = true;
             }

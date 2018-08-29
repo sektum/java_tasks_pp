@@ -32,7 +32,7 @@ public class Main {
         System.out.println(listOfProducts.isEmpty());
         //predicate
         Predicate<Product> predicate = Product::isAvailable;
-        Iterator<Product> iterator = listOfProducts.iterator(predicate);
+        Iterator<Product> iterator = listOfProducts.iterator(predicate.negate());
         //exception if send predicate.negate() into constructor (last element doesn't fit)
         System.out.println("before circle");
         while (iterator.hasNext()){

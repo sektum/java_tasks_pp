@@ -368,10 +368,7 @@ public class ProductList<E> implements List<E> {
 
         private int findNext(int cursor) {
             for (; cursor < size; cursor++) {
-                if(array[cursor] == null){
-                    continue;
-                }
-                if(predicate.test((E) array[cursor])){
+                if (array[cursor] != null && predicate.test((E) array[cursor])) {
                     return cursor;
                 }
             }

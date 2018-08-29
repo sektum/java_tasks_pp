@@ -324,6 +324,7 @@ public class ProductList<E> implements List<E> {
         IteratorBase() {
         }
 
+        @Override
         public boolean hasNext() {
             return cursor < size;
         }
@@ -365,7 +366,7 @@ public class ProductList<E> implements List<E> {
         private int findNext(int cursor) {
             for (; cursor < size; cursor++) {
                 if(array[cursor] == null){
-                    return size;
+                    continue;
                 }
                 if(predicate.test((E) array[cursor])){
                     return cursor;

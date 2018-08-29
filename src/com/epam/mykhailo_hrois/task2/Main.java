@@ -26,6 +26,7 @@ public class Main {
         System.out.println(listOfProducts.toString());
         System.out.println(listOfProducts.size());
         listOfProducts.remove(1);
+        listOfProducts.add(2, null);
         System.out.println(listOfProducts.toString());
         System.out.println(listOfProducts.size());
         System.out.println(listOfProducts.isEmpty());

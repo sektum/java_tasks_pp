@@ -335,7 +335,8 @@ public class ProductList<E> implements List<E> {
             if (i >= size)
                 throw new NoSuchElementException();
             cursor = i + 1;
-            return (E) ProductList.this.array[lastRet = i];
+            lastRet = i;
+            return (E) ProductList.this.array[i];
         }
 
         @Override
@@ -359,7 +360,8 @@ public class ProductList<E> implements List<E> {
 
         @Override
         public E next() {
-            E element = (E) array[lastRet = cursor];
+            E element = (E) array[cursor];
+            lastRet = cursor;
             cursor = findNext(++cursor);
             return element;
         }

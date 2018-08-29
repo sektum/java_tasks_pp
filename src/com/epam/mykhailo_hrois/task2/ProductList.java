@@ -353,7 +353,6 @@ public class ProductList<E> implements List<E> {
             lastRet = -1;
         }
     }
-
     class IteratorWithCondition<E> extends IteratorBase<E> {
         Predicate<E> predicate;
 

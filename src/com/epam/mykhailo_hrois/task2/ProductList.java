@@ -206,15 +206,13 @@ public class ProductList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection c) {
-        boolean flag = false;
         Object[] arr = c.toArray();
         for (int i = 0; i < arr.length; i++) {
             if (!contains(arr[i])) {
-                return flag;
+                return false;
             }
         }
-        flag = true;
-        return flag;
+        return true;
     }
 
     @Override

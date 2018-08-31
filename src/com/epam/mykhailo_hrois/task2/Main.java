@@ -20,28 +20,25 @@ public class Main {
         collection.add(pr2);
         collection.add(pr3);
         listOfProducts.addAll(1, collection);
+        listOfProducts.add(null);
+        listOfProducts.add(new Product());
+        listOfProducts.add(new Product());
+        listOfProducts.add(null);
+        listOfProducts.add(new Product());
+        listOfProducts.add(pr1);
+        listOfProducts.add(pr1);
+        listOfProducts.add(pr1);
         System.out.println(listOfProducts);
         System.out.println(listOfProducts.size());
-        listOfProducts.add(new Product("Nokia", 8.0, true, false, "UK"));
-        System.out.println(listOfProducts);
-        System.out.println(listOfProducts.size());
-        listOfProducts.remove(1);
-        listOfProducts.add(2, null);
-        System.out.println(listOfProducts);
-        System.out.println(listOfProducts.size());
-        System.out.println(listOfProducts.isEmpty());
-        //predicate
         Predicate<Product> predicate = Product::isAvailable;
-        Iterator<Product> iterator = listOfProducts.iterator(predicate.negate());
-        //exception if send predicate.negate() into constructor (last element doesn't fit)
-        System.out.println("before circle");
+        Iterator<Product> iterator = listOfProducts.iterator(predicate);
+        Iterator<Product> iterator2 = listOfProducts.iterator(predicate.negate());
+        int count = 0;
         while (iterator.hasNext()){
-                System.out.println(iterator.next());
+            System.out.println(iterator.next());
         }
-        System.out.println(listOfProducts);
-        iterator.remove();
-        System.out.println(listOfProducts);
-        iterator.remove();
-        System.out.println(listOfProducts);
+        while (iterator2.hasNext()){
+            System.out.println(iterator2.next());
+        }
     }
 }

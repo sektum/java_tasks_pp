@@ -8,6 +8,8 @@ public class ProductList<E> implements List<E> {
     Object[] array = {};
     int size = 0;
 
+    private int modCount;
+
     private static final int DEFAULT_CAPACITY = 5;
     private static final Object[] EMPTY_LIST = {};
 
@@ -15,6 +17,7 @@ public class ProductList<E> implements List<E> {
     public boolean add(E e) {
         capacity(size + 1);
         array[size++] = e;
+        modCount++;
         return true;
     }
 
@@ -22,6 +25,7 @@ public class ProductList<E> implements List<E> {
     public void clear() {
         array = new Object[]{};
         this.size = 0;
+        modCount++;
     }
 
     @Override
@@ -33,6 +37,7 @@ public class ProductList<E> implements List<E> {
     public E set(int index, E element) {
         E oldValue = (E) array[index];
         array[index] = element;
+        modCount++;
         return oldValue;
     }
 
@@ -43,6 +48,7 @@ public class ProductList<E> implements List<E> {
                 size - index);
         array[index] = element;
         size++;
+        modCount++;
     }
 
     @Override
@@ -54,6 +60,7 @@ public class ProductList<E> implements List<E> {
                     numMoved);
         }
         array[--size] = null;
+        modCount++;
         return oldValue;
     }
 
@@ -117,11 +124,11 @@ public class ProductList<E> implements List<E> {
     public boolean remove(Object o) {
         int counter;
         counter = indexOf(o);
-
         if (counter == -1) {
             return false;
         } else {
             remove(indexOf(o));
+            modCount++;
             return true;
         }
     }
@@ -133,6 +140,7 @@ public class ProductList<E> implements List<E> {
         capacity(size + numNew);
         System.arraycopy(a, 0, array, size, numNew);
         size += numNew;
+        modCount++;
         return numNew != 0;
     }
 
@@ -148,6 +156,7 @@ public class ProductList<E> implements List<E> {
         }
         System.arraycopy(a, 0, array, index, numNew);
         size += numNew;
+        modCount++;
         return numNew != 0;
     }
 
@@ -155,6 +164,7 @@ public class ProductList<E> implements List<E> {
     @Override
     public void sort(Comparator c) {
         Arrays.sort((E[]) array, 0, size, c);
+        modCount++;
     }
 
     @Override
@@ -180,6 +190,7 @@ public class ProductList<E> implements List<E> {
                     elementData[i] = null;
                 }
                 size = w;
+                modCount++;
                 flag = true;
             }
         }
@@ -196,6 +207,7 @@ public class ProductList<E> implements List<E> {
         for (int i = 0; i < arr.length; i++) {
             this.remove((E) arr[i]);
             if (arr[i].equals(this.array[i])) {
+                modCount++;
                 flag = true;
             } else {
                 flag = false;
@@ -321,10 +333,12 @@ public class ProductList<E> implements List<E> {
 
     class IteratorBase<E> implements Iterator<E> {
 
-        int cursor; // index of next element to return
-        int lastRet = -1; // index of last element returned; -1 if no such
+        int cursor;
+        int lastRet = -1;
+        int expectedModCount;
 
         IteratorBase() {
+            expectedModCount = modCount;
         }
 
         @Override
@@ -334,6 +348,7 @@ public class ProductList<E> implements List<E> {
 
         @SuppressWarnings("unchecked")
         public E next() {
+            modCheck();
             int i = cursor;
             if (i >= size) {
                 throw new NoSuchElementException();
@@ -348,11 +363,20 @@ public class ProductList<E> implements List<E> {
             if (lastRet < 0) {
                 throw new IllegalStateException();
             }
+            modCheck();
             ProductList.this.remove(ProductList.this.array[lastRet]);
             cursor = lastRet;
             lastRet = -1;
+            expectedModCount = modCount;
+        }
+
+        protected void modCheck() {
+            if (modCount != expectedModCount) {
+                throw new ConcurrentModificationException("Cannot mutate in context of iterator");
+            }
         }
     }
+
     class IteratorWithCondition<E> extends IteratorBase<E> {
         Predicate<E> predicate;
 
@@ -363,6 +387,7 @@ public class ProductList<E> implements List<E> {
 
         @Override
         public E next() {
+            modCheck();
             E element = (E) array[cursor];
             lastRet = cursor;
             cursor = findNext(++cursor);

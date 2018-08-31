@@ -78,6 +78,7 @@ public class Product {
     public void setCountry(String country) {
         this.country = country;
     }
+
     public String getName() {
         return name;
     }

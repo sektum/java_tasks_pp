@@ -323,7 +323,8 @@ public class ProductList<E> implements List<E> {
         int cursor;
         int lastRet = -1;
 
-        IteratorBase() { }
+        IteratorBase() {
+        }
 
         @Override
         public boolean hasNext() {

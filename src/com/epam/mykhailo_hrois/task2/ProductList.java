@@ -59,14 +59,11 @@ public class ProductList<E> implements List<E> {
 
     @Override
     public int indexOf(Object o) {
-        if (o == null) {
-            for (int i = 0; i < size; i++) {
-                if (array[i] == null) {
-                    return i;
-                }
+        for (int i = 0; i < size; i++) {
+            if (o == null && array[i] == null) {
+                return i;
             }
-        } else {
-            for (int i = 0; i < size; i++) {
+            else {
                 if (o.equals(array[i])) {
                     return i;
                 }
@@ -77,14 +74,11 @@ public class ProductList<E> implements List<E> {
 
     @Override
     public int lastIndexOf(Object o) {
-        if (o == null) {
-            for (int i = size - 1; i >= 0; i--) {
-                if (array[i] == null) {
-                    return i;
-                }
+        for (int i = size - 1; i >= 0; i--) {
+            if (o == null && array[i] == null) {
+                return i;
             }
-        } else {
-            for (int i = size - 1; i >= 0; i--) {
+            else {
                 if (o.equals(array[i])) {
                     return i;
                 }
@@ -92,7 +86,6 @@ public class ProductList<E> implements List<E> {
         }
         return -1;
     }
-
     @Override
     public ListIterator listIterator() {
         return null;

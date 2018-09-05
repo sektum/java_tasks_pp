@@ -118,11 +118,10 @@ public class LeftRightWrapperList<E> implements List<E> {
     public E set(int index, E element) {
         E oldValue;
         if (index < leftListSize) {
-            if(leftList.get(index).equals(element)){
+            if (leftList.get(index).equals(element)) {
                 oldValue = leftList.set(index, element);
                 return oldValue;
-            }
-            else {
+            } else {
                 throw new UnsupportedOperationException();
             }
         } else {
@@ -207,7 +206,7 @@ public class LeftRightWrapperList<E> implements List<E> {
     @Override
     public boolean containsAll(Collection c) {
         for (Object colElement : c) {
-            if(!this.contains(colElement)){
+            if (!this.contains(colElement)) {
                 return false;
             }
         }
@@ -255,15 +254,14 @@ public class LeftRightWrapperList<E> implements List<E> {
                 throw new NoSuchElementException();
             }
             cursor = i + 1;
-            if(toRightCheck()){
+            if (toRightCheck()) {
                 return (E) leftList.get(i);
-            }
-            else {
+            } else {
                 return (E) rightList.get(i - leftListSize);
             }
         }
 
-        private boolean toRightCheck(){
+        private boolean toRightCheck() {
             return (cursor - 1) < leftListSize;
         }
     }

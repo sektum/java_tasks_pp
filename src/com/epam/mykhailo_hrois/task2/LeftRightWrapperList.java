@@ -201,7 +201,15 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public Object[] toArray(Object[] a) {
-        throw new UnsupportedOperationException();
+        if (a.length < size()) {
+            return toArray();
+        } else {
+            System.arraycopy(toArray(), 0, a, 0, size());
+            if (a.length > size()) {
+                a[size()] = null;
+            }
+            return a;
+        }
     }
 
     @Override
@@ -216,7 +224,6 @@ public class LeftRightWrapperList<E> implements List<E> {
     class WrapperIterator<E> implements Iterator<E> {
 
         int cursor;
-        int lastRet = -1;
 
         WrapperIterator() {
         }
@@ -228,26 +235,22 @@ public class LeftRightWrapperList<E> implements List<E> {
 
         @SuppressWarnings("unchecked")
         public E next() {
-//            int i = cursor;
-//            if (i >= size) {
-//                throw new NoSuchElementException();
-//            }
-//            cursor = i + 1;
-//            lastRet = i;
-            throw new UnsupportedOperationException();
+            int i = cursor;
+            if (i >= size) {
+                throw new NoSuchElementException();
+            }
+            cursor = i + 1;
+            if(toRightCheck()){
+                return (E) leftList.get(i);
+            }
+            else {
+                return (E) rightList.get(i - leftListSize);
+            }
         }
 
-        @Override
-        public void remove() {
-//            if (lastRet < 0) {
-//                throw new IllegalStateException();
-//            }
-//            leftList.remove(lastRet);
-//            cursor = lastRet;
-//            lastRet = -1;
-            throw new UnsupportedOperationException();
+        private boolean toRightCheck(){
+            return (cursor - 1) < leftListSize;
         }
-
     }
 
 }

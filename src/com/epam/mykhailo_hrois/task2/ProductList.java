@@ -218,7 +218,15 @@ public class ProductList<E> implements List<E> {
 
     @Override
     public Object[] toArray(Object[] a) {
-        return new Object[0];
+        if (a.length < size()) {
+            return toArray();
+        } else {
+            System.arraycopy(toArray(), 0, a, 0, size());
+            if (a.length > size()) {
+                a[size()] = null;
+            }
+            return a;
+        }
     }
 
     @Override

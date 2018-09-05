@@ -5,11 +5,17 @@ import java.util.function.Predicate;
 
 public class ProductList<E> implements List<E> {
 
+    private static final int DEFAULT_CAPACITY = 5;
+    private static final Object[] EMPTY_LIST = {};
     Object[] array = {};
     int size = 0;
 
-    private static final int DEFAULT_CAPACITY = 5;
-    private static final Object[] EMPTY_LIST = {};
+    private static int calculateCapacity(Object[] elementData, int minCapacity) {
+        if (elementData == EMPTY_LIST) {
+            return Math.max(DEFAULT_CAPACITY, minCapacity);
+        }
+        return minCapacity;
+    }
 
     @Override
     public boolean add(E e) {
@@ -62,8 +68,7 @@ public class ProductList<E> implements List<E> {
         for (int i = 0; i < size; i++) {
             if (o == null && array[i] == null) {
                 return i;
-            }
-            else {
+            } else {
                 if (o.equals(array[i])) {
                     return i;
                 }
@@ -77,8 +82,7 @@ public class ProductList<E> implements List<E> {
         for (int i = size - 1; i >= 0; i--) {
             if (o == null && array[i] == null) {
                 return i;
-            }
-            else {
+            } else {
                 if (o.equals(array[i])) {
                     return i;
                 }
@@ -86,6 +90,7 @@ public class ProductList<E> implements List<E> {
         }
         return -1;
     }
+
     @Override
     public ListIterator listIterator() {
         return null;
@@ -142,7 +147,6 @@ public class ProductList<E> implements List<E> {
         size += numNew;
         return numNew != 0;
     }
-
 
     @Override
     public void sort(Comparator c) {
@@ -280,13 +284,6 @@ public class ProductList<E> implements List<E> {
 
     private void capacity(int i) {
         needToGrow(calculateCapacity(array, i));
-    }
-
-    private static int calculateCapacity(Object[] elementData, int minCapacity) {
-        if (elementData == EMPTY_LIST) {
-            return Math.max(DEFAULT_CAPACITY, minCapacity);
-        }
-        return minCapacity;
     }
 
     @Override

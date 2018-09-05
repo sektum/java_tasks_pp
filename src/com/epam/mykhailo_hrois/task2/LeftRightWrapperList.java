@@ -197,10 +197,10 @@ public class LeftRightWrapperList<E> implements List<E> {
         boolean currentFlag;
         for (Object colElement : c) {
             currentFlag = leftList.contains(colElement);
-            if(!currentFlag){
+            if (!currentFlag) {
                 currentFlag = rightList.contains(colElement);
             }
-            if(!currentFlag){
+            if (!currentFlag) {
                 return currentFlag;
             }
         }

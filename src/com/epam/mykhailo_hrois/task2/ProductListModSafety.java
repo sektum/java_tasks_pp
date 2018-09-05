@@ -5,13 +5,18 @@ import java.util.function.Predicate;
 
 public class ProductListModSafety<E> implements List<E> {
 
-    Object[] array = {};
-    int size = 0;
-
-    private int modCount;
-
     private static final int DEFAULT_CAPACITY = 5;
     private static final Object[] EMPTY_LIST = {};
+    Object[] array = {};
+    int size = 0;
+    private int modCount;
+
+    private static int calculateCapacity(Object[] elementData, int minCapacity) {
+        if (elementData == EMPTY_LIST) {
+            return Math.max(DEFAULT_CAPACITY, minCapacity);
+        }
+        return minCapacity;
+    }
 
     @Override
     public boolean add(E e) {
@@ -160,7 +165,6 @@ public class ProductListModSafety<E> implements List<E> {
         return numNew != 0;
     }
 
-
     @Override
     public void sort(Comparator c) {
         Arrays.sort((E[]) array, 0, size, c);
@@ -302,13 +306,6 @@ public class ProductListModSafety<E> implements List<E> {
         needToGrow(calculateCapacity(array, i));
     }
 
-    private static int calculateCapacity(Object[] elementData, int minCapacity) {
-        if (elementData == EMPTY_LIST) {
-            return Math.max(DEFAULT_CAPACITY, minCapacity);
-        }
-        return minCapacity;
-    }
-
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -321,9 +318,18 @@ public class ProductListModSafety<E> implements List<E> {
         return result.toString();
     }
 
-    // Iterator
+    // Iterator with condition
     public Iterator<E> iterator(Predicate<E> predicate) {
         return new IteratorWithCondition<E>(predicate);
+    }
+
+    // COWIterator
+    public Iterator<E> iterator(boolean copyOnWrite) {
+        if (copyOnWrite) {
+            return new COWIterator<E>();
+        } else {
+            return new IteratorBase<E>();
+        }
     }
 
     @Override
@@ -401,6 +407,28 @@ public class ProductListModSafety<E> implements List<E> {
                 }
             }
             return size;
+        }
+    }
+
+    class COWIterator<E> implements Iterator<E> {
+        private final Object[] snapshot;
+        private int cursor;
+
+        COWIterator() {
+            this.snapshot = new Object[array.length];
+            System.arraycopy(array, 0, snapshot, 0, array.length);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return cursor < snapshot.length;
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            return (E) snapshot[cursor++];
         }
     }
 }

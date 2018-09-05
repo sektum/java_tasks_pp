@@ -38,12 +38,13 @@ public class LeftRightWrapperList<E> implements List<E> {
     }
 
     @Override
-    public WrapperIterator<E> iterator() {
+    public Iterator<E> iterator() {
         return new WrapperIterator<E>();
     }
 
     @Override
     public Object[] toArray() {
+        //Object[] array = System.arraycopy(leftList.toArray(), );
         throw new UnsupportedOperationException();
     }
 
@@ -56,13 +57,12 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public boolean remove(Object o) {
-        if(leftList.contains(o) && !rightList.contains(o)){
-            throw new UnsupportedOperationException();
-        }
-        else {
-            rightList.remove(o);
+        if (rightList.remove(o)) {
             updateSize();
             return true;
+        }
+        else {
+            return false;
         }
     }
 
@@ -86,17 +86,15 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public void clear() {
-        leftList = Collections.EMPTY_LIST;
-        rightList = Collections.EMPTY_LIST;
+        rightList.clear();
     }
 
     @Override
     public E get(int index) {
         E element;
-        if(index < leftListSize){
+        if (index < leftListSize) {
             element = leftList.get(index);
-        }
-        else {
+        } else {
             element = rightList.get(index - leftListSize);
         }
         return element;
@@ -138,28 +136,23 @@ public class LeftRightWrapperList<E> implements List<E> {
     @Override
     public int indexOf(Object o) {
         int index;
-        index = leftList.indexOf(o) != -1 ? leftList.indexOf(o) : rightList.indexOf(o);
-        return index == -1 ? index : index + leftListSize;
+        index = leftList.indexOf(o);
+        if(index == -1) {
+            index = rightList.indexOf(o) + leftListSize;
+            return index;
+        }
+        else {
+            return index;
+        }
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        int index1, index2;
-        index1 = leftList.lastIndexOf(o);
-        index2 = rightList.lastIndexOf(o);
-        if (index1 == -1) {
-            if (index2 == -1) {
-                return -1;
-            } else {
-                return index2 + leftListSize;
-            }
-        } else {
-            if (index2 == -1) {
-                return index1;
-            } else {
-                return index2 + leftListSize;
-            }
+        int lastIndex = rightList.lastIndexOf(o) + leftListSize;
+        if(lastIndex == -1){
+            lastIndex = leftList.lastIndexOf(o);
         }
+        return lastIndex;
     }
 
     @Override
@@ -197,7 +190,16 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public Object[] toArray(Object[] a) {
-        return new Object[0];
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("LeftRightWrapperList{");
+        sb.append("leftList=").append(leftList);
+        sb.append(", rightList=").append(rightList);
+        sb.append('}');
+        return sb.toString();
     }
 
     class WrapperIterator<E> implements Iterator<E> {

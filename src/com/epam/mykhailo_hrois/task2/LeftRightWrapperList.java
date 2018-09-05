@@ -1,6 +1,10 @@
 package com.epam.mykhailo_hrois.task2;
 
-import java.util.*;
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class LeftRightWrapperList<E> implements List<E> {
     private List<E> leftList;
@@ -43,9 +47,15 @@ public class LeftRightWrapperList<E> implements List<E> {
     }
 
     @Override
-    public Object[] toArray() {
-        //Object[] array = System.arraycopy(leftList.toArray(), );
-        throw new UnsupportedOperationException();
+    public E[] toArray() {
+        E[] leftArray = (E[]) leftList.toArray();
+        E[] rightArray = (E[]) rightList.toArray();
+        int leftLen = leftArray.length;
+        int rightLen = rightArray.length;
+        E[] newArray = (E[]) Array.newInstance(leftArray.getClass().getComponentType(), leftLen + rightLen);
+        System.arraycopy(leftArray, 0, newArray, 0, leftLen);
+        System.arraycopy(rightArray, 0, newArray, leftLen, rightLen);
+        return newArray;
     }
 
     @Override
@@ -60,8 +70,7 @@ public class LeftRightWrapperList<E> implements List<E> {
         if (rightList.remove(o)) {
             updateSize();
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -137,11 +146,10 @@ public class LeftRightWrapperList<E> implements List<E> {
     public int indexOf(Object o) {
         int index;
         index = leftList.indexOf(o);
-        if(index == -1) {
+        if (index == -1) {
             index = rightList.indexOf(o) + leftListSize;
             return index;
-        }
-        else {
+        } else {
             return index;
         }
     }
@@ -149,7 +157,7 @@ public class LeftRightWrapperList<E> implements List<E> {
     @Override
     public int lastIndexOf(Object o) {
         int lastIndex = rightList.lastIndexOf(o) + leftListSize;
-        if(lastIndex == -1){
+        if (lastIndex == -1) {
             lastIndex = leftList.lastIndexOf(o);
         }
         return lastIndex;
@@ -172,20 +180,31 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection c) {
-        //TODO
-        return false;
+        boolean flag = rightList.retainAll(c);
+        updateSize();
+        return flag;
     }
 
     @Override
     public boolean removeAll(Collection c) {
-        //TODO
-        return false;
+        boolean flag = rightList.removeAll(c);
+        updateSize();
+        return flag;
     }
 
     @Override
     public boolean containsAll(Collection c) {
-        //TODO
-        return false;
+        boolean currentFlag;
+        for (Object colElement : c) {
+            currentFlag = leftList.contains(colElement);
+            if(!currentFlag){
+                currentFlag = rightList.contains(colElement);
+            }
+            if(!currentFlag){
+                return currentFlag;
+            }
+        }
+        return true;
     }
 
     @Override

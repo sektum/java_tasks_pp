@@ -1,10 +1,7 @@
 package com.epam.mykhailo_hrois.task2;
 
 import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class LeftRightWrapperList<E> implements List<E> {
     private List<E> leftList;
@@ -194,14 +191,9 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection c) {
-        boolean currentFlag;
         for (Object colElement : c) {
-            currentFlag = leftList.contains(colElement);
-            if (!currentFlag) {
-                currentFlag = rightList.contains(colElement);
-            }
-            if (!currentFlag) {
-                return currentFlag;
+            if(!this.contains(colElement)){
+                return false;
             }
         }
         return true;
@@ -224,9 +216,9 @@ public class LeftRightWrapperList<E> implements List<E> {
     class WrapperIterator<E> implements Iterator<E> {
 
         int cursor;
+        int lastRet = -1;
 
         WrapperIterator() {
-            //TODO
         }
 
         @Override
@@ -236,13 +228,24 @@ public class LeftRightWrapperList<E> implements List<E> {
 
         @SuppressWarnings("unchecked")
         public E next() {
-            //TODO
-            return null;
+//            int i = cursor;
+//            if (i >= size) {
+//                throw new NoSuchElementException();
+//            }
+//            cursor = i + 1;
+//            lastRet = i;
+            throw new UnsupportedOperationException();
         }
 
         @Override
         public void remove() {
-            //TODO
+//            if (lastRet < 0) {
+//                throw new IllegalStateException();
+//            }
+//            leftList.remove(lastRet);
+//            cursor = lastRet;
+//            lastRet = -1;
+            throw new UnsupportedOperationException();
         }
 
     }

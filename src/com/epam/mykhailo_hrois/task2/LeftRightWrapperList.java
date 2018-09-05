@@ -57,9 +57,11 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public boolean add(E o) {
-        rightList.add(o);
-        updateSize();
-        return true;
+        boolean changed = rightList.add(o);
+        if (changed) {
+            updateSize();
+        }
+        return changed;
     }
 
     @Override
@@ -74,9 +76,11 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        rightList.addAll(c);
-        updateSize();
-        return true;
+        boolean changed = rightList.addAll(c);
+        if (changed) {
+            updateSize();
+        }
+        return changed;
     }
 
     @Override
@@ -92,7 +96,11 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public void clear() {
-        rightList.clear();
+        if (leftList.isEmpty()) {
+            rightList.clear();
+        } else {
+            throw new IllegalStateException();
+        }
     }
 
     @Override
@@ -110,12 +118,19 @@ public class LeftRightWrapperList<E> implements List<E> {
     public E set(int index, E element) {
         E oldValue;
         if (index < leftListSize) {
-            throw new UnsupportedOperationException();
+            if(leftList.get(index).equals(element)){
+                oldValue = leftList.set(index, element);
+                return oldValue;
+            }
+            else {
+                throw new UnsupportedOperationException();
+            }
         } else {
             oldValue = rightList.set(index - leftListSize, element);
             return oldValue;
         }
     }
+
 
     @Override
     public void add(int index, E element) {

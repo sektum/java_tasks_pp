@@ -9,28 +9,21 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     private int leftListSize;
     private int rightListSize;
-    private int size;
 
     LeftRightWrapperList(List<E> unmodifiableLeftList, List<E> modifiableRightList) {
         leftList = unmodifiableLeftList;
         rightList = modifiableRightList;
         leftListSize = unmodifiableLeftList.size();
-        updateSize();
-    }
-
-    private void updateSize() {
-        rightListSize = rightList.size();
-        size = leftListSize + rightListSize;
     }
 
     @Override
     public int size() {
-        return size;
+        return leftList.size() + rightList.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return size == 0;
+        return leftList.isEmpty() && rightList.isEmpty();
     }
 
     @Override
@@ -57,30 +50,17 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public boolean add(E o) {
-        boolean changed = rightList.add(o);
-        if (changed) {
-            updateSize();
-        }
-        return changed;
+        return rightList.add(o);
     }
 
     @Override
     public boolean remove(Object o) {
-        if (rightList.remove(o)) {
-            updateSize();
-            return true;
-        } else {
-            return false;
-        }
+        return remove(o);
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        boolean changed = rightList.addAll(c);
-        if (changed) {
-            updateSize();
-        }
-        return changed;
+        return rightList.addAll(c);
     }
 
     @Override
@@ -89,7 +69,6 @@ public class LeftRightWrapperList<E> implements List<E> {
             throw new UnsupportedOperationException();
         } else {
             rightList.addAll(index - leftListSize, c);
-            updateSize();
             return true;
         }
     }
@@ -137,7 +116,6 @@ public class LeftRightWrapperList<E> implements List<E> {
             throw new UnsupportedOperationException();
         } else {
             rightList.add(index - leftListSize, element);
-            updateSize();
         }
     }
 
@@ -148,7 +126,6 @@ public class LeftRightWrapperList<E> implements List<E> {
             throw new UnsupportedOperationException();
         } else {
             oldValue = rightList.remove(index - leftListSize);
-            updateSize();
             return oldValue;
         }
     }
@@ -191,16 +168,12 @@ public class LeftRightWrapperList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection c) {
-        boolean flag = rightList.retainAll(c);
-        updateSize();
-        return flag;
+        return rightList.retainAll(c);
     }
 
     @Override
     public boolean removeAll(Collection c) {
-        boolean flag = rightList.removeAll(c);
-        updateSize();
-        return flag;
+        return rightList.removeAll(c);
     }
 
     @Override
@@ -244,13 +217,13 @@ public class LeftRightWrapperList<E> implements List<E> {
 
         @Override
         public boolean hasNext() {
-            return cursor < size;
+            return cursor < size();
         }
 
         @SuppressWarnings("unchecked")
         public E next() {
             int i = cursor;
-            if (i >= size) {
+            if (i >= size()) {
                 throw new NoSuchElementException();
             }
             cursor = i + 1;

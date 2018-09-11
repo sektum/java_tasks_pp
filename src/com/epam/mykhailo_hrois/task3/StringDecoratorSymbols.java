@@ -11,8 +11,17 @@ public class StringDecoratorSymbols {
     public int hashCode() {
         char[] arr = key.toCharArray();
         int hash = 0;
-        for (int i = 0; i < 4; i++) {
-            hash+=arr[i];
+        if(arr.length >= 4) {
+            for (int i = 0; i < 4; i++) {
+                hash += arr[i];
+            }
+        }
+        else if(arr.length != 0){
+            for (char anArr : arr) {
+                hash += anArr;
+            }
+        } else {
+            return 0;
         }
         return hash;
     }

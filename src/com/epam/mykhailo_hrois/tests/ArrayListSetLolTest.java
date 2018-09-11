@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.*;
 
 public class ArrayListSetLolTest {
     private ArrayListSetLol<String> listSetLol;

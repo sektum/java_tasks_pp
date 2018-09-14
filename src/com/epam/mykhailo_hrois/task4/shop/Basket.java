@@ -1,14 +1,16 @@
-package com.epam.mykhailo_hrois.task4.basket;
+package com.epam.mykhailo_hrois.task4.shop;
 
 import com.epam.mykhailo_hrois.task4.entities.Goods;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Basket {
-    private Hashtable<Goods, Integer> basket;
+    private Map<Goods, Integer> basket;
+    private FiveLastMap<Goods, Integer> fiveLastMap;
 
-    Basket() {
-        basket = new Hashtable<>();
+    public Basket() {
+        basket = new HashMap<>();
     }
 
     public boolean add(Goods good) {
@@ -43,5 +45,13 @@ public class Basket {
     @Override
     public String toString() {
         return basket.toString();
+    }
+
+    public Map<Goods, Integer> getBasket() {
+        return basket;
+    }
+
+    public FiveLastMap<Goods, Integer> getFiveLastMap() {
+        return fiveLastMap;
     }
 }

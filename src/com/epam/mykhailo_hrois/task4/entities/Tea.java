@@ -1,4 +1,4 @@
-package com.epam.mykhailo_hrois.task4;
+package com.epam.mykhailo_hrois.task4.entities;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Tea extends GroceryGoods {
     private String color;
 
-    Tea(){
+    Tea() {
     }
 
     public Tea(int id, BigDecimal price, double caloricity, String color) {

@@ -1,4 +1,4 @@
-package com.epam.mykhailo_hrois.task4;
+package com.epam.mykhailo_hrois.task4.entities;
 
 import java.math.BigDecimal;
 import java.util.Objects;

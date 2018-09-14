@@ -1,4 +1,4 @@
-package com.epam.mykhailo_hrois.task4;
+package com.epam.mykhailo_hrois.task4.entities;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Smartphone extends TechGoods {
     private String OS;
 
-    Smartphone(){
+    Smartphone() {
     }
 
     public Smartphone(int id, BigDecimal price, String brand, String OS) {

@@ -1,4 +1,4 @@
-package com.epam.mykhailo_hrois.task4;
+package com.epam.mykhailo_hrois.task4.entities;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -6,7 +6,7 @@ import java.util.Objects;
 public class TechGoods extends Goods {
     private String brand;
 
-    TechGoods(){
+    TechGoods() {
     }
 
     public TechGoods(int id, BigDecimal price, String brand) {

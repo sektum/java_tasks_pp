@@ -32,6 +32,7 @@ public class AssociativeMap {
             sb.append(System.lineSeparator());
         }
         sb.append("help").append(" - ").append(PrintCommand.NAME).append(System.lineSeparator());
+        sb.append("set").append(" - ").append(SetGoodCommand.NAME).append(System.lineSeparator());
         sb.append("type \"exit\" to quit").append(System.lineSeparator());
         return sb.toString();
     }

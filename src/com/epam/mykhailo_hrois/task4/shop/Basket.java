@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Basket {
-    private Map<Goods, Integer> basket = new HashMap<>();
     private static FiveLastMap<Goods, Integer> fiveLastMap = new FiveLastMap<>(true);
+    private Map<Goods, Integer> basket = new HashMap<>();
 
     public Basket() {
     }

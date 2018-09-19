@@ -1,8 +1,9 @@
 package com.epam.mykhailo_hrois.task4.controller;
 
+import com.epam.mykhailo_hrois.task4.commands.*;
+
 import java.util.HashMap;
 import java.util.Map;
-import com.epam.mykhailo_hrois.task4.commands.*;
 
 public class AssociativeMap {
     private static Map<String, String> map = new HashMap<>();

@@ -33,10 +33,9 @@ public class Controller {
     public String executeCommand(String commandName) {
         try {
             return CommandList.getCommandList().get(AssociativeMap.getMap().get(commandName)).execute(this);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             return CommandList.getCommandList().get(NoCommand.NAME).execute(this);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return CommandList.getCommandList().get(ExceptionCommand.NAME).execute(this);
         }
 

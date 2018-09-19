@@ -7,8 +7,7 @@ public class NoCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
-        controller.setException("There is no such command");
-        return CommandList.getCommandList().get(DisplayGoodsCommand.NAME).execute(controller);
+        return "There is no such command \n" + CommandList.getCommandList().get(PrintCommand.NAME).execute(controller);
     }
 
 }

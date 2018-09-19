@@ -12,9 +12,9 @@ public class BuyAllFromBasketCommand extends Command {
     @Override
     public String execute(Controller controller) {
         BigDecimal price = BigDecimal.ZERO;
-        Map<Goods, Integer> basket = this.basket.getBasket();
+        Map<Goods, Integer> basket = controller.getBasket().getBasketMap();
         for (Goods good : basket.keySet()) {
-            price.add(good.getPrice().multiply(new BigDecimal(basket.get(good))));
+            price = price.add(good.getPrice().multiply(new BigDecimal(basket.get(good))));
         }
         return String.valueOf(price);
     }

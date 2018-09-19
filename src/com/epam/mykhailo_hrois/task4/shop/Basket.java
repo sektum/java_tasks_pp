@@ -6,11 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Basket {
-    private Map<Goods, Integer> basket;
-    private FiveLastMap<Goods, Integer> fiveLastMap;
+    private Map<Goods, Integer> basket = new HashMap<>();
+    private static FiveLastMap<Goods, Integer> fiveLastMap = new FiveLastMap<>(true);
 
     public Basket() {
-        basket = new HashMap<>();
     }
 
     public boolean add(Goods good) {
@@ -24,6 +23,7 @@ public class Basket {
         } else {
             basket.put(good, 1);
         }
+        fiveLastMap.put(good, 1);
         return true;
     }
 
@@ -39,15 +39,16 @@ public class Basket {
                 basket.replace(good, count);
             }
         }
+        fiveLastMap.remove(good);
         return true;
     }
 
     @Override
     public String toString() {
-        return basket.toString();
+        return "Basket:\n" + basket.toString();
     }
 
-    public Map<Goods, Integer> getBasket() {
+    public Map<Goods, Integer> getBasketMap() {
         return basket;
     }
 

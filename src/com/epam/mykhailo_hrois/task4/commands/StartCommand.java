@@ -1,5 +1,6 @@
 package com.epam.mykhailo_hrois.task4.commands;
 
+import com.epam.mykhailo_hrois.task4.controller.AssociativeMap;
 import com.epam.mykhailo_hrois.task4.controller.Controller;
 import com.epam.mykhailo_hrois.task4.shop.Warehouse;
 
@@ -9,11 +10,11 @@ public class StartCommand extends Command {
     @Override
     public String execute(Controller controller) {
         StringBuilder result = new StringBuilder();
-        result.append("Welcome to our shop. What do you want?");
+        result.append("Welcome to our shop. What would you like?");
         result.append(System.lineSeparator());
-        result.append(Warehouse.getInstance().toString());
+        result.append(new DisplayGoodsCommand().execute(controller));
         result.append(System.lineSeparator());
-        result.append(CommandList.getCommandList().toString());
+        result.append(new PrintBasketCommand().execute(controller));
         return result.toString();
     }
 }

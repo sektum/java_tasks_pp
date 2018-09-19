@@ -7,6 +7,6 @@ public class PrintBasketCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
-        return basket.toString();
+        return controller.getBasket().toString();
     }
 }

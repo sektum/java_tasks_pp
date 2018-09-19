@@ -4,7 +4,5 @@ import com.epam.mykhailo_hrois.task4.controller.Controller;
 import com.epam.mykhailo_hrois.task4.shop.Basket;
 
 public abstract class Command {
-    public Basket basket = new Basket();
-
     public abstract String execute(Controller controller);
 }

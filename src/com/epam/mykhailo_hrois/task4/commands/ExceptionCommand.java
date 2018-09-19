@@ -7,7 +7,6 @@ public class ExceptionCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
-        controller.setException("There was some problem. Returning to start page");
-        return CommandList.getCommandList().get(DisplayGoodsCommand.NAME).execute(controller);
+        return "There was some problem. Returning to start page \n" + CommandList.getCommandList().get(DisplayGoodsCommand.NAME).execute(controller);
     }
 }

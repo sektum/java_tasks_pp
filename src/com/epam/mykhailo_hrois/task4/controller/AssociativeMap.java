@@ -17,6 +17,7 @@ public class AssociativeMap {
         map.put("help", PrintCommand.NAME);
         map.put("start", StartCommand.NAME);
         map.put("set", SetGoodCommand.NAME);
+        map.put("exit", ExitCommand.NAME);
     }
 
     public static Map<String, String> getMap() {

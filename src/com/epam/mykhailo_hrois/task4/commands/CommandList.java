@@ -6,7 +6,7 @@ import java.util.Map;
 public class CommandList {
     private static LinkedHashMap<String, Command> commandList = new LinkedHashMap<>();
 
-    public CommandList() {
+    static {
         feelCommands();
     }
 
@@ -14,7 +14,7 @@ public class CommandList {
         return commandList;
     }
 
-    private void feelCommands() {
+    private static void feelCommands() {
         commandList.put(DisplayGoodsCommand.NAME, new DisplayGoodsCommand());
         commandList.put(PrintBasketCommand.NAME, new PrintBasketCommand());
         commandList.put(AddToBasketCommand.NAME, new AddToBasketCommand());
@@ -25,5 +25,7 @@ public class CommandList {
         commandList.put(NoCommand.NAME, new NoCommand());
         commandList.put(PrintCommand.NAME, new PrintCommand());
         commandList.put(SetGoodCommand.NAME, new SetGoodCommand());
+        commandList.put(AddTargetCommand.NAME, new AddTargetCommand());
+        commandList.put(ExitCommand.NAME, new ExitCommand());
     }
 }

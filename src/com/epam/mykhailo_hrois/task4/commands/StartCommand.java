@@ -7,8 +7,12 @@ public class StartCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
+        controller.setSession(true);
         StringBuilder result = new StringBuilder();
         result.append("Welcome to our shop. What would you like?");
+        result.append(System.lineSeparator());
+        result.append("Type \"help\" to see the command list.");
+        result.append(System.lineSeparator());
         result.append(System.lineSeparator());
         result.append(new DisplayGoodsCommand().execute(controller));
         result.append(System.lineSeparator());

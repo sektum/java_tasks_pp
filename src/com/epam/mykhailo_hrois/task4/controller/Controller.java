@@ -1,26 +1,17 @@
 package com.epam.mykhailo_hrois.task4.controller;
 
+import com.epam.mykhailo_hrois.task4.commands.AddTargetCommand;
 import com.epam.mykhailo_hrois.task4.commands.CommandList;
 import com.epam.mykhailo_hrois.task4.commands.ExceptionCommand;
 import com.epam.mykhailo_hrois.task4.commands.NoCommand;
-import com.epam.mykhailo_hrois.task4.entities.Goods;
 import com.epam.mykhailo_hrois.task4.shop.Basket;
 
 public class Controller {
-    private Goods good;
-    private int enterId;
+    private boolean session;
+    private boolean settingGood;
+    private int enterId = -1;
     private String exception;
-    private AssociativeMap map = new AssociativeMap();
-    private CommandList commandList = new CommandList();
     private Basket basket = new Basket();
-
-    public Goods getGood() {
-        return good;
-    }
-
-    public void setGood(Goods good) {
-        this.good = good;
-    }
 
     public String getException() {
         return exception;
@@ -32,7 +23,13 @@ public class Controller {
 
     public String executeCommand(String commandName) {
         try {
-            return CommandList.getCommandList().get(AssociativeMap.getMap().get(commandName)).execute(this);
+            if(isSettingGood()){
+                this.setEnterId(Integer.valueOf(commandName) - 1);
+                return CommandList.getCommandList().get(AddTargetCommand.NAME).execute(this);
+            }
+            else {
+                return CommandList.getCommandList().get(AssociativeMap.getMap().get(commandName)).execute(this);
+            }
         } catch (NullPointerException e) {
             return CommandList.getCommandList().get(NoCommand.NAME).execute(this);
         } catch (Exception e) {
@@ -51,5 +48,21 @@ public class Controller {
 
     public void setEnterId(int enterId) {
         this.enterId = enterId;
+    }
+
+    public boolean isSession() {
+        return session;
+    }
+
+    public void setSession(boolean session) {
+        this.session = session;
+    }
+
+    public boolean isSettingGood() {
+        return settingGood;
+    }
+
+    public void setSettingGood(boolean settingGood) {
+        this.settingGood = settingGood;
     }
 }

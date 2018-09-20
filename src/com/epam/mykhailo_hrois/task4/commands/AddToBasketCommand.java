@@ -7,7 +7,10 @@ public class AddToBasketCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
-        controller.getBasket().add(controller.getGood());
-        return CommandList.getCommandList().get(PrintBasketCommand.NAME).execute(controller);
+        if(controller.getEnterId() == -1){
+            return CommandList.getCommandList().get(SetGoodCommand.NAME).execute(controller);
+        }
+        controller.getBasket().add(controller.getEnterId());
+        return "Good added to basket \n" + CommandList.getCommandList().get(PrintBasketCommand.NAME).execute(controller);
     }
 }

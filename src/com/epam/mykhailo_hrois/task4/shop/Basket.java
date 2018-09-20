@@ -1,58 +1,79 @@
 package com.epam.mykhailo_hrois.task4.shop;
 
-import com.epam.mykhailo_hrois.task4.entities.Goods;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class Basket {
-    private static FiveLastMap<Goods, Integer> fiveLastMap = new FiveLastMap<>(true);
-    private Map<Goods, Integer> basket = new HashMap<>();
+    private static FiveLastMap<Integer, Integer> fiveLastMap = new FiveLastMap(true);
+    private Map<Integer, Integer> basket = new HashMap<>();
 
     public Basket() {
     }
 
-    public boolean add(Goods good) {
+    public boolean add(Integer goodId) {
         int count;
-        if (good == null) {
+        if (goodId == null) {
             return false;
         }
-        if (basket.containsKey(good)) {
-            count = basket.get(good) + 1;
-            basket.replace(good, count);
+        if (basket.containsKey(goodId)) {
+            count = basket.get(goodId) + 1;
+            basket.replace(goodId, count);
         } else {
-            basket.put(good, 1);
+            basket.put(goodId, 1);
         }
-        fiveLastMap.put(good, 1);
+        fiveLastMap.put(goodId, 1);
         return true;
     }
 
-    public boolean delete(Goods good) {
+    public boolean delete(Integer goodId) {
         int count;
-        if (good == null || !basket.containsKey(good)) {
+        if (goodId == null || !basket.containsKey(goodId)) {
             return false;
         } else {
-            if (basket.get(good) == 1) {
-                basket.remove(good);
+            if (basket.get(goodId) == 1) {
+                basket.remove(goodId);
             } else {
-                count = basket.get(good) - 1;
-                basket.replace(good, count);
+                count = basket.get(goodId) - 1;
+                basket.replace(goodId, count);
             }
         }
-        fiveLastMap.remove(good);
+        fiveLastMap.remove(goodId);
         return true;
+    }
+
+    public void deleteAll() {
+        basket.clear();
     }
 
     @Override
     public String toString() {
-        return "Basket:\n" + basket.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Basket: ").append(System.lineSeparator());
+        for (Integer goodID : this.basket.keySet()) {
+            sb.append(Warehouse.getGoodsList().get(goodID).toString());
+            sb.append(" , count = ");
+            sb.append(basket.get(goodID));
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 
-    public Map<Goods, Integer> getBasketMap() {
+    public Map<Integer, Integer> getBasketMap() {
         return basket;
     }
 
-    public FiveLastMap<Goods, Integer> getFiveLastMap() {
+    public FiveLastMap<Integer, Integer> getFiveLastMap() {
         return fiveLastMap;
+    }
+
+    public String printFiveLast() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Five last: ").append(System.lineSeparator());
+        for (Object goodId : fiveLastMap.keySet()) {
+            int i = (int) goodId;
+            sb.append(Warehouse.getGoodsList().get(i).toString());
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 }

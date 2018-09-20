@@ -7,7 +7,7 @@ public class FiveLastGoodsCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
-        return controller.getBasket().getFiveLastMap().toString();
+        return controller.getBasket().printFiveLast();
     }
 
 }

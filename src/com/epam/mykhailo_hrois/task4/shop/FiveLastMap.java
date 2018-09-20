@@ -3,7 +3,7 @@ package com.epam.mykhailo_hrois.task4.shop;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FiveLastMap<Goods, Integer> extends LinkedHashMap {
+public class FiveLastMap<P, V> extends LinkedHashMap {
     static final int INITIAL_CAPACITY = 16;
     private static final float LOAD_FACTOR = 0.75f;
 
@@ -13,6 +13,7 @@ public class FiveLastMap<Goods, Integer> extends LinkedHashMap {
 
     @Override
     protected boolean removeEldestEntry(Map.Entry eldest) {
-        return size() == 6;
+        return size() > 5;
     }
+
 }

@@ -28,7 +28,7 @@ public class Warehouse {
         return goodsList;
     }
 
-    private static void feelWarehouse(){
+    private static void feelWarehouse() {
         int i = 1;
         goodsList.add(new Keyboard(i++, BigDecimal.valueOf(40.99), "hp", "mechanic"));
         goodsList.add(new Keyboard(i++, BigDecimal.valueOf(20.99), "hp", "scissor"));

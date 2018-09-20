@@ -23,11 +23,10 @@ public class Controller {
 
     public String executeCommand(String commandName) {
         try {
-            if(isSettingGood()){
+            if (isSettingGood()) {
                 this.setEnterId(Integer.valueOf(commandName) - 1);
                 return CommandList.getCommandList().get(AddTargetCommand.NAME).execute(this);
-            }
-            else {
+            } else {
                 return CommandList.getCommandList().get(AssociativeMap.getMap().get(commandName)).execute(this);
             }
         } catch (NullPointerException e) {

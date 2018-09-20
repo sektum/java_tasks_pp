@@ -1,0 +1,4 @@
+there is some text
+around
+here. so, we testing two-thread's reading
+of this file

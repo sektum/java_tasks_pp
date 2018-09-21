@@ -1,7 +1,6 @@
 package com.epam.mykhailo_hrois.task5;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,15 +11,20 @@ public class FindAndPush extends Thread {
     private int currentFirst;
     private int currentSecond;
 
+    public FindAndPush() {
+        super("FindThread");
+    }
+
     @Override
     public void run() {
         while (!this.isInterrupted()) {
             synchronized (Holder.class) {
                 try {
-                    Holder.class.wait();
+                    while (Holder.isFileWasReadCompletely()) {
+                        Holder.class.wait();
+                    }
                     readFile(Holder.pathName);
                     findAndPush();
-                    Holder.pathName = "";
                 } catch (InterruptedException e) {
                     System.out.println("2nd interrupted");
                     interrupt();
@@ -37,8 +41,6 @@ public class FindAndPush extends Thread {
                 listOfLengths.add(line.getBytes().length);
                 line = br.readLine();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,10 +53,30 @@ public class FindAndPush extends Thread {
             for (int j = i + 1; j < listOfLengths.size(); j++) {
                 currentSecond += listOfLengths.get(j);
                 if (listOfLengths.get(i).equals(listOfLengths.get(j))) {
-                    Holder.queue.put(new LengthWithIndexes(listOfLengths.get(i), currentFirst, currentSecond));
+                    LengthWithIndexes e = new LengthWithIndexes(listOfLengths.get(i), currentFirst, currentSecond);
+                    synchronized (Holder.class) {
+                        while (!Holder.isValueWasAlreadyRead()) {
+                            Holder.class.wait();
+                        }
+                        Holder.put(e);
+                        Holder.setValueWasAlreadyRead(false);
+                        Holder.class.notify();
+                        Holder.class.wait();
+                    }
                     break;
                 }
             }
         }
+        Holder.setFileWasReadCompletely(true);
+        clear();
+        synchronized (Holder.class) {
+            Holder.class.notify();
+        }
+    }
+
+    private void clear() {
+        this.currentFirst = 0;
+        this.currentSecond = 0;
+        this.listOfLengths.clear();
     }
 }

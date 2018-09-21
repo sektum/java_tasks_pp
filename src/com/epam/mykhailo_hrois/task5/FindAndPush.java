@@ -1,15 +1,16 @@
 package com.epam.mykhailo_hrois.task5;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class FindAndPush extends Thread {
-    private File file;
-    private Scanner scanner;
     private List<Integer> listOfLengths;
+    private int currentFirst;
+    private int currentSecond;
 
     @Override
     public void run() {
@@ -20,33 +21,37 @@ public class FindAndPush extends Thread {
                     readFile(Holder.pathName);
                     findAndPush();
                     Holder.pathName = "";
-                } catch (FileNotFoundException e) {
-                    System.out.println("File not found");
                 } catch (InterruptedException e) {
+                    System.out.println("2nd interrupted");
                     interrupt();
                 }
             }
         }
     }
 
-    private void readFile(String pathName) throws FileNotFoundException {
-        file = new File(pathName);
-        scanner = new Scanner(file);
+    private void readFile(String pathName) {
         listOfLengths = new ArrayList<>();
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            listOfLengths.add(line.toCharArray().length);
+        try (BufferedReader br = new BufferedReader(new FileReader(pathName))) {
+            String line = br.readLine();
+            while (line != null) {
+                listOfLengths.add(line.getBytes().length);
+                line = br.readLine();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private void findAndPush() {
+    private void findAndPush() throws InterruptedException {
         for (int i = 0; i < listOfLengths.size() - 1; i++) {
+            currentFirst += listOfLengths.get(i);
+            currentSecond = currentFirst;
             for (int j = i + 1; j < listOfLengths.size(); j++) {
+                currentSecond += listOfLengths.get(j);
                 if (listOfLengths.get(i).equals(listOfLengths.get(j))) {
-                    System.out.println("puted");
-                    Holder.length = listOfLengths.get(i);
-                    Holder.firstIndex = i;
-                    Holder.secondIndex = j;
+                    Holder.queue.put(new LengthWithIndexes(listOfLengths.get(i), currentFirst, currentSecond));
                     break;
                 }
             }

@@ -1,8 +1,8 @@
 package com.epam.mykhailo_hrois.task5;
 
+import java.util.concurrent.SynchronousQueue;
+
 class Holder {
-    public static String pathName = "";
-    public static Integer length = -1;
-    public static Integer firstIndex = -1;
-    public static Integer secondIndex = -1;
+    public static volatile String pathName = "";
+    public static SynchronousQueue<LengthWithIndexes> queue = new SynchronousQueue<>();
 }

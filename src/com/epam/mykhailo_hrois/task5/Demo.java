@@ -1,11 +1,11 @@
 package com.epam.mykhailo_hrois.task5;
 
-import java.io.IOException;
-
 public class Demo {
 
-    public static void main(String... args) throws IOException {
-        FindLongests findLongests = new FindLongests();
-        new Thread(findLongests).start();
+    public static void main(String... args) {
+        PrintLongests printLongests = new PrintLongests();
+        FindAndPush findAndPush = new FindAndPush();
+        new Thread(printLongests).start();
+        new Thread(findAndPush).start();
     }
 }

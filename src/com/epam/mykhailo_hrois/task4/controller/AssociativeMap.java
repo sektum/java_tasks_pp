@@ -14,9 +14,13 @@ public class AssociativeMap {
         map.put("3", AddToBasketCommand.NAME);
         map.put("4", FiveLastGoodsCommand.NAME);
         map.put("5", BuyAllFromBasketCommand.NAME);
+        map.put("6", OrderOnDateCommand.NAME);
+        map.put("7", NearestOrderCommand.NAME);
+        map.put("8", BetweenDatesCommand.NAME);
         map.put("help", PrintCommand.NAME);
         map.put("start", StartCommand.NAME);
         map.put("set", SetGoodCommand.NAME);
+        map.put("date", AddDateCommand.NAME);
         map.put("exit", ExitCommand.NAME);
     }
 
@@ -27,7 +31,7 @@ public class AssociativeMap {
     public static String print() {
         final StringBuilder sb = new StringBuilder("Commands: ");
         sb.append(System.lineSeparator());
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 9; i++) {
             sb.append(String.valueOf(i));
             sb.append(" - ");
             sb.append(map.get(String.valueOf(i)));

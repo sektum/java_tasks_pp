@@ -1,7 +1,7 @@
 package com.epam.mykhailo_hrois.task6;
 
 public class ResultWrapper {
-    private byte[] currentBytes;
+    private byte[] currentBytes = {};
     private int firstIndex;
     private int secondIndex;
 
@@ -27,5 +27,14 @@ public class ResultWrapper {
 
     public void setSecondIndex(int secondIndex) {
         this.secondIndex = secondIndex;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < currentBytes.length; i++) {
+            stringBuilder.append(currentBytes[i]);
+        }
+        return stringBuilder.toString();
     }
 }

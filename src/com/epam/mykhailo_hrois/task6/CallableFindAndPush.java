@@ -1,14 +1,16 @@
 package com.epam.mykhailo_hrois.task6;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 public class CallableFindAndPush implements Callable<ResultWrapper> {
     private static ResultWrapper resultWrapper = new ResultWrapper();
-    private final static int MULTI_COUNT = 2;
-    private final byte[] sequence;
+    private final String path;
+    private boolean isSameLength;
+    private int index;
 
-    public CallableFindAndPush(byte[] sequence) {
-        this.sequence = sequence;
+    public CallableFindAndPush(String path) {
+        this.path = path;
     }
 
     public static ResultWrapper getResultWrapper() {
@@ -17,8 +19,17 @@ public class CallableFindAndPush implements Callable<ResultWrapper> {
 
     @Override
     public ResultWrapper call() throws Exception {
-        if(sequence.length > resultWrapper.getCurrentBytes().length){
-            resultWrapper.setCurrentBytes(sequence);
+        List<byte[]> resultList = ReadFileIntoByteArrays.readFile(path);
+        for (byte[] sequence : resultList) {
+            if (sequence.length > resultWrapper.getCurrentBytes().length) {
+                resultWrapper.setCurrentBytes(sequence);
+                resultWrapper.setFirstIndex(index);
+                isSameLength = false;
+            } else if (sequence.length == resultWrapper.getCurrentBytes().length && !isSameLength) {
+                resultWrapper.setSecondIndex(index);
+                isSameLength = true;
+            }
+            index += sequence.length;
         }
         return resultWrapper;
     }

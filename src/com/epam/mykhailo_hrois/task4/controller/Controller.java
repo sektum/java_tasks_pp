@@ -34,7 +34,6 @@ public class Controller {
         } catch (Exception e) {
             return CommandList.getCommandList().get(ExceptionCommand.NAME).execute(this);
         }
-
     }
 
     public Basket getBasket() {

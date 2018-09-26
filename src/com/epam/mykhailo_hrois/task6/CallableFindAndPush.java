@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 public class CallableFindAndPush implements Callable<ResultWrapper> {
-    private static ResultWrapper resultWrapper = new ResultWrapper();
+    private ResultWrapper resultWrapper = new ResultWrapper();
     private final String path;
     private boolean isSameLength;
     private int index;
@@ -13,7 +13,7 @@ public class CallableFindAndPush implements Callable<ResultWrapper> {
         this.path = path;
     }
 
-    public static ResultWrapper getResultWrapper() {
+    public ResultWrapper getResultWrapper() {
         return resultWrapper;
     }
 

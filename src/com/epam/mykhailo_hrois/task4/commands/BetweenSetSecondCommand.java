@@ -9,6 +9,7 @@ public class BetweenSetSecondCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
+        controller.setEnteredSecondDate(controller.getValue());
         controller.setBetween(false);
         StringBuilder result = new StringBuilder();
         long from = controller.getEnteredDate();

@@ -11,6 +11,7 @@ public class OrderGoodsCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
+        controller.setEnteredDate(controller.getValue());
         controller.setOrdering(false);
         controller.getOrders().getOrdersMap().put(controller.getEnteredDate(), new HashSet<>(controller.getBasket().getBasketMap().keySet()));
         StringBuilder result = new StringBuilder();

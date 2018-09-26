@@ -7,6 +7,7 @@ public class BetweenSetFirstCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
+        controller.setEnteredDate(controller.getValue());
         return "Please, enter SECOND date in the same format";
     }
 }

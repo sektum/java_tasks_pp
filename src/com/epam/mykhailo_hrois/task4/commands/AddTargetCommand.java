@@ -8,6 +8,7 @@ public class AddTargetCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
+        controller.setEnterId(Integer.valueOf(controller.getValue()) - 1);
         controller.setSettingGood(false);
         return "You are on Good: " + Warehouse.getGoodsList().get(controller.getEnterId()).toString();
     }

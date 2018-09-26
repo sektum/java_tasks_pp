@@ -17,38 +17,34 @@ public class Controller {
     private Long enteredDate;
     private Long enteredSecondDate;
     private int enterId = -1;
-    private String exception;
+    private String value;
     private Basket basket = new Basket();
     private Orders orders = new Orders();
 
-    public String getException() {
-        return exception;
+    public String getValue() {
+        return value;
     }
 
-    public void setException(String exception) {
-        this.exception = exception;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String executeCommand(String commandName) {
         try {
+            setValue(commandName);
             if (isSettingGood()) {
-                this.setEnterId(Integer.valueOf(commandName) - 1);
                 return CommandList.getCommandList().get(AddTargetCommand.NAME).execute(this);
             }
             if (isNearest()) {
-                setEnteredDate(commandName);
                 return CommandList.getCommandList().get(AddDateCommand.NAME).execute(this);
             }
             if (isOrdering()) {
-                setEnteredDate(commandName);
                 return CommandList.getCommandList().get(OrderGoodsCommand.NAME).execute(this);
             }
             if (isBetween()) {
                 if (getEnteredDate() == null) {
-                    setEnteredDate(commandName);
                     return CommandList.getCommandList().get(BetweenSetFirstCommand.NAME).execute(this);
                 }
-                setEnteredSecondDate(commandName);
                 return CommandList.getCommandList().get(BetweenSetSecondCommand.NAME).execute(this);
 
             } else {

@@ -9,6 +9,7 @@ public class AddDateCommand extends Command {
 
     @Override
     public String execute(Controller controller) {
+        controller.setEnteredDate(controller.getValue());
         controller.setNearest(false);
         StringBuilder result = new StringBuilder();
         long time = controller.getEnteredDate();

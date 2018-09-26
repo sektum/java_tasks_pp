@@ -20,7 +20,6 @@ public class AssociativeMap {
         map.put("help", PrintCommand.NAME);
         map.put("start", StartCommand.NAME);
         map.put("set", SetGoodCommand.NAME);
-        map.put("date", AddDateCommand.NAME);
         map.put("exit", ExitCommand.NAME);
     }
 

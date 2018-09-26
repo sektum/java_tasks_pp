@@ -6,11 +6,11 @@ public class AddToBasketCommand extends Command {
     public static final String NAME = "ADD_TO_BASKET_COMMAND";
 
     @Override
-    public String execute(Controller controller) {
+    public String execute(Controller controller, String[] strings) {
         if (controller.getEnterId() == -1) {
-            return CommandList.getCommandList().get(SetGoodCommand.NAME).execute(controller);
+            return CommandList.getCommandList().get(SetGoodCommand.NAME).execute(controller, strings);
         }
         controller.getBasket().add(controller.getEnterId());
-        return "Good added to basket \n" + CommandList.getCommandList().get(PrintBasketCommand.NAME).execute(controller);
+        return "Good added to basket \n" + CommandList.getCommandList().get(PrintBasketCommand.NAME).execute(controller, strings);
     }
 }

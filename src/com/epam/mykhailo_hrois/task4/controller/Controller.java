@@ -1,6 +1,8 @@
 package com.epam.mykhailo_hrois.task4.controller;
 
-import com.epam.mykhailo_hrois.task4.commands.*;
+import com.epam.mykhailo_hrois.task4.commands.CommandList;
+import com.epam.mykhailo_hrois.task4.commands.ExceptionCommand;
+import com.epam.mykhailo_hrois.task4.commands.NoCommand;
 import com.epam.mykhailo_hrois.task4.shop.Basket;
 import com.epam.mykhailo_hrois.task4.shop.Orders;
 
@@ -10,10 +12,6 @@ import java.util.Date;
 
 public class Controller {
     private boolean session;
-    private boolean settingGood;
-    private boolean nearest;
-    private boolean ordering;
-    private boolean between;
     private Long enteredDate;
     private Long enteredSecondDate;
     private int enterId = -1;
@@ -29,31 +27,15 @@ public class Controller {
         this.value = value;
     }
 
-    public String executeCommand(String commandName) {
+    public String executeCommand(String input) {
+        String[] strings = input.split(" ");
+        String commandName = strings[0];
         try {
-            setValue(commandName);
-            if (isSettingGood()) {
-                return CommandList.getCommandList().get(AddTargetCommand.NAME).execute(this);
-            }
-            if (isNearest()) {
-                return CommandList.getCommandList().get(AddDateCommand.NAME).execute(this);
-            }
-            if (isOrdering()) {
-                return CommandList.getCommandList().get(OrderGoodsCommand.NAME).execute(this);
-            }
-            if (isBetween()) {
-                if (getEnteredDate() == null) {
-                    return CommandList.getCommandList().get(BetweenSetFirstCommand.NAME).execute(this);
-                }
-                return CommandList.getCommandList().get(BetweenSetSecondCommand.NAME).execute(this);
-
-            } else {
-                return CommandList.getCommandList().get(AssociativeMap.getMap().get(commandName)).execute(this);
-            }
+            return CommandList.getCommandList().get(AssociativeMap.getMap().get(commandName)).execute(this, strings);
         } catch (NullPointerException e) {
-            return CommandList.getCommandList().get(NoCommand.NAME).execute(this);
+            return CommandList.getCommandList().get(NoCommand.NAME).execute(this, strings);
         } catch (Exception e) {
-            return CommandList.getCommandList().get(ExceptionCommand.NAME).execute(this);
+            return CommandList.getCommandList().get(ExceptionCommand.NAME).execute(this, strings);
         }
     }
 
@@ -75,22 +57,6 @@ public class Controller {
 
     public void setSession(boolean session) {
         this.session = session;
-    }
-
-    public boolean isSettingGood() {
-        return settingGood;
-    }
-
-    public void setSettingGood(boolean settingGood) {
-        this.settingGood = settingGood;
-    }
-
-    public boolean isNearest() {
-        return nearest;
-    }
-
-    public void setNearest(boolean nearest) {
-        this.nearest = nearest;
     }
 
     public Orders getOrders() {
@@ -124,27 +90,11 @@ public class Controller {
         }
     }
 
-    public boolean isBetween() {
-        return between;
-    }
-
-    public void setBetween(boolean between) {
-        this.between = between;
-    }
-
     public Long getEnteredSecondDate() {
         return enteredSecondDate;
     }
 
     public void setEnteredSecondDate(String enteredSecondDate) {
         this.enteredSecondDate = convertDate(enteredSecondDate);
-    }
-
-    public boolean isOrdering() {
-        return ordering;
-    }
-
-    public void setOrdering(boolean ordering) {
-        this.ordering = ordering;
     }
 }

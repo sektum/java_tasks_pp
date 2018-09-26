@@ -7,7 +7,7 @@ public class PrintCommand extends Command {
     public static final String NAME = "PRINT_COMMANDS";
 
     @Override
-    public String execute(Controller controller) {
+    public String execute(Controller controller, String[] strings) {
         return AssociativeMap.print();
     }
 }

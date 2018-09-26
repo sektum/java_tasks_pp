@@ -25,14 +25,9 @@ public class CommandList {
         commandList.put(NoCommand.NAME, new NoCommand());
         commandList.put(PrintCommand.NAME, new PrintCommand());
         commandList.put(SetGoodCommand.NAME, new SetGoodCommand());
-        commandList.put(AddTargetCommand.NAME, new AddTargetCommand());
-        commandList.put(AddDateCommand.NAME, new AddDateCommand());
         commandList.put(NearestOrderCommand.NAME, new NearestOrderCommand());
         commandList.put(OrderOnDateCommand.NAME, new OrderOnDateCommand());
-        commandList.put(OrderGoodsCommand.NAME, new OrderGoodsCommand());
         commandList.put(BetweenDatesCommand.NAME, new BetweenDatesCommand());
-        commandList.put(BetweenSetFirstCommand.NAME, new BetweenSetFirstCommand());
-        commandList.put(BetweenSetSecondCommand.NAME, new BetweenSetSecondCommand());
         commandList.put(ExitCommand.NAME, new ExitCommand());
     }
 }

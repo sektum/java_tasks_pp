@@ -6,7 +6,7 @@ public class StartCommand extends Command {
     public static final String NAME = "START_COMMAND";
 
     @Override
-    public String execute(Controller controller, String[] strings) {
+    public String execute(Controller controller, String[] arguments) {
         controller.setSession(true);
         StringBuilder result = new StringBuilder();
         result.append("Welcome to our shop. What would you like?");
@@ -14,9 +14,9 @@ public class StartCommand extends Command {
         result.append("Type \"help\" to see the command list.");
         result.append(System.lineSeparator());
         result.append(System.lineSeparator());
-        result.append(new DisplayGoodsCommand().execute(controller, strings));
+        result.append(new DisplayGoodsCommand().execute(controller, arguments));
         result.append(System.lineSeparator());
-        result.append(new PrintBasketCommand().execute(controller, strings));
+        result.append(new PrintBasketCommand().execute(controller, arguments));
         return result.toString();
     }
 }

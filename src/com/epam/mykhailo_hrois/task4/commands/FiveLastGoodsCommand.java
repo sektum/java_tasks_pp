@@ -6,7 +6,7 @@ public class FiveLastGoodsCommand extends Command {
     public static final String NAME = "FIVE_LAST_GOODS_COMMAND";
 
     @Override
-    public String execute(Controller controller, String[] strings) {
+    public String execute(Controller controller, String[] arguments) {
         return controller.getBasket().printFiveLast();
     }
 

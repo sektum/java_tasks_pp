@@ -11,7 +11,7 @@ public class BuyAllFromBasketCommand extends Command {
     public static final String NAME = "BUY_ALL_COMMAND";
 
     @Override
-    public String execute(Controller controller, String[] strings) {
+    public String execute(Controller controller, String[] arguments) {
         BigDecimal price = BigDecimal.ZERO;
         Map<Integer, Integer> basket = controller.getBasket().getBasketMap();
         Goods good;

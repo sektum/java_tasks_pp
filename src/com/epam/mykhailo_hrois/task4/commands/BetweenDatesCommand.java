@@ -1,6 +1,7 @@
 package com.epam.mykhailo_hrois.task4.commands;
 
 import com.epam.mykhailo_hrois.task4.controller.Controller;
+import com.epam.mykhailo_hrois.task4.controller.Converter;
 
 import java.util.Date;
 
@@ -8,12 +9,10 @@ public class BetweenDatesCommand extends Command {
     public static final String NAME = "BETWEEN_DATES_COMMAND";
 
     @Override
-    public String execute(Controller controller, String[] strings) {
-        controller.setEnteredDate(strings[1]);
-        controller.setEnteredSecondDate(strings[2]);
+    public String execute(Controller controller, String[] arguments) {
+        Long from = Converter.convertDate(arguments[1]);
+        Long to = Converter.convertDate(arguments[2]);
         StringBuilder result = new StringBuilder();
-        long from = controller.getEnteredDate();
-        long to = controller.getEnteredSecondDate();
         boolean isInputValid = from < to;
 
         if (!isInputValid) {

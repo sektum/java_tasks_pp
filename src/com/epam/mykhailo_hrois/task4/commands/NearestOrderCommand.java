@@ -1,6 +1,7 @@
 package com.epam.mykhailo_hrois.task4.commands;
 
 import com.epam.mykhailo_hrois.task4.controller.Controller;
+import com.epam.mykhailo_hrois.task4.controller.Converter;
 
 import java.util.Date;
 
@@ -8,10 +9,9 @@ public class NearestOrderCommand extends Command {
     public static final String NAME = "NEAREST_ORDER_COMMAND";
 
     @Override
-    public String execute(Controller controller, String[] strings) {
-        controller.setEnteredDate(strings[1]);
+    public String execute(Controller controller, String[] arguments) {
         StringBuilder result = new StringBuilder();
-        long time = controller.getEnteredDate();
+        long time = Converter.convertDate(arguments[1]);
         long minDiff = Long.MAX_VALUE;
         Long foundedOrderKeyTime = null;
 
@@ -28,7 +28,6 @@ public class NearestOrderCommand extends Command {
         } else {
             result.append("Orders list is empty");
         }
-        controller.setEnteredDate(null);
         return result.toString();
     }
 }

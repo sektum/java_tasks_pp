@@ -7,7 +7,7 @@ public class DisplayGoodsCommand extends Command {
     public static final String NAME = "DISPLAY_GOODS_COMMAND";
 
     @Override
-    public String execute(Controller controller, String[] strings) {
+    public String execute(Controller controller, String[] arguments) {
         return Warehouse.getInstance().toString();
     }
 

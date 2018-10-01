@@ -6,7 +6,7 @@ public class ExceptionCommand extends Command {
     public static final String NAME = "EXCEPTION_COMMAND";
 
     @Override
-    public String execute(Controller controller, String[] strings) {
+    public String execute(Controller controller, String[] arguments) {
         return "There was some problem. Returning to start page";
     }
 }

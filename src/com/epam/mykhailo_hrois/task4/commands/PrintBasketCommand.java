@@ -6,7 +6,7 @@ public class PrintBasketCommand extends Command {
     public static final String NAME = "PRINT_BASKET_COMMAND";
 
     @Override
-    public String execute(Controller controller, String[] strings) {
+    public String execute(Controller controller, String[] arguments) {
         return controller.getBasket().toString();
     }
 }

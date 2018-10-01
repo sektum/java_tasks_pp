@@ -1,6 +1,7 @@
 package com.epam.mykhailo_hrois.task6;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +18,10 @@ public class ReadFileIntoByteArrays {
                 listOfLengths.add(line.getBytes());
                 line = br.readLine();
             }
-        } catch (IOException e) {
+        } catch (FileNotFoundException e){
+            System.out.println("File not found. Try to enter another path ->");
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
         return listOfLengths;

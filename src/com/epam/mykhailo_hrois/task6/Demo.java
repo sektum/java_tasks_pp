@@ -23,18 +23,16 @@ public class Demo {
                 future = executor.submit(resultWrapperCallable);
                 try {
                     result = future.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
                 stringBuilder.append(result);
                 stringBuilder.append(System.lineSeparator());
-                stringBuilder.append("Length: ").append(result.getCurrentBytes().length);
+                stringBuilder.append("Length: ").append(result != null ? result.getCurrentBytes().length : 0);
                 stringBuilder.append(System.lineSeparator());
-                stringBuilder.append("First index: ").append(result.getFirstIndex());
+                stringBuilder.append("First index: ").append(result != null ? result.getFirstIndex() : 0);
                 stringBuilder.append(System.lineSeparator());
-                stringBuilder.append("Second index: ").append(result.getSecondIndex());
+                stringBuilder.append("Second index: ").append(result != null ? result.getSecondIndex() : 0);
                 System.out.println(stringBuilder);
             }
         }

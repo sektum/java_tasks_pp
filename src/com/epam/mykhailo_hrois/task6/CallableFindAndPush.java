@@ -6,8 +6,6 @@ import java.util.concurrent.Callable;
 public class CallableFindAndPush implements Callable<ResultWrapper> {
     private ResultWrapper resultWrapper = new ResultWrapper();
     private final String path;
-    private boolean isSameLength;
-    private int index;
 
     public CallableFindAndPush(String path) {
         this.path = path;
@@ -19,6 +17,8 @@ public class CallableFindAndPush implements Callable<ResultWrapper> {
 
     @Override
     public ResultWrapper call() throws Exception {
+        boolean isSameLength = false;
+        int index = 0;
         List<byte[]> resultList = ReadFileIntoByteArrays.readFile(path);
         for (byte[] sequence : resultList) {
             if (sequence.length > resultWrapper.getCurrentBytes().length) {

@@ -3,32 +3,32 @@ package com.epam.mykhailo_hrois.task5;
 class Holder {
     public static volatile String pathName = "";
     public static LengthWithIndexes value;
-    private static boolean FILE_WAS_READ_COMPLETELY = true;
-    private static boolean VALUE_WAS_ALREADY_READ = true;
+    private static boolean fileWasReadCompletely = true;
+    private static boolean valueWasAlreadyRead = true;
 
     public static synchronized void put(LengthWithIndexes value) {
         Holder.value = value;
-        Holder.VALUE_WAS_ALREADY_READ = false;
+        Holder.valueWasAlreadyRead = false;
     }
 
     public static synchronized LengthWithIndexes get() {
-        Holder.VALUE_WAS_ALREADY_READ = true;
+        Holder.valueWasAlreadyRead = true;
         return value;
     }
 
     public static boolean isFileWasReadCompletely() {
-        return FILE_WAS_READ_COMPLETELY;
+        return fileWasReadCompletely;
     }
 
     public static void setFileWasReadCompletely(boolean fileWasReadCompletely) {
-        FILE_WAS_READ_COMPLETELY = fileWasReadCompletely;
+        Holder.fileWasReadCompletely = fileWasReadCompletely;
     }
 
     public static boolean isValueWasAlreadyRead() {
-        return VALUE_WAS_ALREADY_READ;
+        return valueWasAlreadyRead;
     }
 
     public static void setValueWasAlreadyRead(boolean valueWasAlreadyRead) {
-        VALUE_WAS_ALREADY_READ = valueWasAlreadyRead;
+        Holder.valueWasAlreadyRead = valueWasAlreadyRead;
     }
 }

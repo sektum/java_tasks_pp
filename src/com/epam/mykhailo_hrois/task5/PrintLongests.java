@@ -48,7 +48,7 @@ public class PrintLongests extends Thread {
                 throw new InterruptedException();
             }
             Holder.setFileWasReadCompletely(false);
-            Holder.class.notifyAll();
+            Holder.class.notify();
         }
     }
 

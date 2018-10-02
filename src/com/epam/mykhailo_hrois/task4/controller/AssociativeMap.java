@@ -19,7 +19,6 @@ public class AssociativeMap {
         map.put("8", BetweenDatesCommand.NAME);
         map.put("help", PrintCommand.NAME);
         map.put("start", StartCommand.NAME);
-        map.put("set", SetGoodCommand.NAME);
         map.put("exit", ExitCommand.NAME);
     }
 
@@ -30,14 +29,13 @@ public class AssociativeMap {
     public static String print() {
         final StringBuilder sb = new StringBuilder("Commands: ");
         sb.append(System.lineSeparator());
-        for (int i = 1; i < 9; i++) {
+        for (int i = 1; i <= 8; i++) {
             sb.append(String.valueOf(i));
             sb.append(" - ");
             sb.append(map.get(String.valueOf(i)));
             sb.append(System.lineSeparator());
         }
         sb.append("help").append(" - ").append(PrintCommand.NAME).append(System.lineSeparator());
-        sb.append("set").append(" - ").append(SetGoodCommand.NAME).append(System.lineSeparator());
         sb.append("type \"exit\" to quit").append(System.lineSeparator());
         return sb.toString();
     }

@@ -1,7 +1,7 @@
 package com.epam.mykhailo_hrois.task5;
 
 class Holder {
-    public static volatile String pathName = "";
+    public static String pathName = "";
     public static LengthWithIndexes value;
     private static boolean fileWasReadCompletely = true;
     private static boolean valueWasAlreadyRead = true;

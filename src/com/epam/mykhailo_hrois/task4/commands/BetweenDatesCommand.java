@@ -6,7 +6,7 @@ import com.epam.mykhailo_hrois.task4.controller.Converter;
 import java.util.Date;
 
 public class BetweenDatesCommand extends Command {
-    public static final String NAME = "BETWEEN_DATES_COMMAND";
+    public static final String NAME = "Search for order between dates. Format: \"8 yyyy-mm-dd;HH:mm:ss yyyy-mm-dd;HH:mm:ss\"";
 
     @Override
     public String execute(Controller controller, String[] arguments) {

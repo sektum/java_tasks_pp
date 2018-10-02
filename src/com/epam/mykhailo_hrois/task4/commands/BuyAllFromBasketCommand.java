@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public class BuyAllFromBasketCommand extends Command {
-    public static final String NAME = "BUY_ALL_COMMAND";
+    public static final String NAME = "Buy all from basket. Clears basket as well";
 
     @Override
     public String execute(Controller controller, String[] arguments) {
